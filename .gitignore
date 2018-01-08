@@ -1,3 +1,6 @@
+#IntelliJ settings
 .idea/
-project/target/
+#compiled output
 target/
+
+project/target/
