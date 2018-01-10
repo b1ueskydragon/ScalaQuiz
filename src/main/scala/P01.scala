@@ -7,7 +7,7 @@ object P01 {
   def last[A](l: List[A]): A = l.last // last() already throws the NoSuchElementException
 
   def lastRecursion[A](l: List[A]): A = l match {
-    case h :: Nil => h // one head element and a tail formed by nothing
+    case h :: Nil => h // one head element and a tail formed by nothing (input list has only one element)
     case _ :: tail => lastRecursion(tail) // takes the tail of the list and calls itself on the remaining values (the first element is not even stored, it is ignored using the _ wildcard)
     case _ => throw new NoSuchElementException // when the list is empty
   }
