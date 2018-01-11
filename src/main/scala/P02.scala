@@ -9,7 +9,7 @@ object P02 {
     l.init.last
   }
 
-  def initPra(l: List[Int])= {
+  def initPra(l: List[Int]): List[Int] = {
     if (l.isEmpty) throw new NoSuchElementException
     l.init
   }
