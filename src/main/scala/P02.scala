@@ -7,6 +7,8 @@ object P02 {
 
     println(penultimateRecursion(Dummy.yourList))
     println(penultimateRecursion_(Dummy.yourList))
+
+    println(lastNth(2, Dummy.yourList))
   }
 
   def initPra(l: List[Int]): List[Int] = {
@@ -37,6 +39,12 @@ object P02 {
     case _ :: tail => penultimateRecursion_(tail) // OR case _ => penultimateRecursionBrief(l.tail) ???
 
     case _ => throw new NoSuchElementException
+  }
 
+  def lastNth[A](n: Int, l: List[A]): A = l match {
+    case tail if tail.length == n => tail.head
+    case _ :: tail => lastNth(n, tail)
+
+    case _ => throw new NoSuchElementException
   }
 }
