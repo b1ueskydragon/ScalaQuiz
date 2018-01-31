@@ -27,10 +27,10 @@ object P02 {
   }
 
   def penultimateRecursion[A](l: List[A]): A = l match {
-    case List(a, b) => l.head // if only 2 elements (base case).
+    case List(_, _) => l.head // if only 2 elements (base case).
     case list => penultimateRecursion(list.tail)
 
-    case List(a) => throw new NoSuchElementException
+    case List(_) => throw new NoSuchElementException
   }
 
   // same algorithm as above.
