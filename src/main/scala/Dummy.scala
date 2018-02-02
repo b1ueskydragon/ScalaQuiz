@@ -4,4 +4,5 @@ object Dummy {
   val aList = List(8)
   val nestedList = List(List(1, 2), 3, List(4, List(5, 6)))
   val duplicatedList = List('a', 'a', 'b', 'b', 'a', 'a', 'c', 'a', 'c', 'c', 'a', 'd', 'a')
+  val duplicatedList2 = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
 }
