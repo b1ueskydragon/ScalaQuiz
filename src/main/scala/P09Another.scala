@@ -1,38 +1,36 @@
-import scala.collection.mutable
 
 /**
   * P09 の重複を許さないパターン
   */
 object P09Another {
   def main(args: Array[String]) = {
-    val duplicatedList = List('a, 'a, 'a, 'b, 'b, 'a)
-    println(pack(List(), duplicatedList, new mutable.HashMap))
+    val duplicatedList = List('a, 'a, 'a, 'b, 'b, 'a, 'c)
+    println(pack(duplicatedList))
   }
 
   /**
     *
-    * @param outer    bigger one (initial status is Nil)
     * @param unpacked a target list unpacked yet (elements of outer)
-    * @param table    着目時点での h とその格納場所(インデックス)
     * @tparam A any type
     * @return outer
     */
-  def pack[A](outer: List[List[A]], unpacked: List[A], table: mutable.HashMap[A, Int]): List[List[A]] = unpacked match {
-    case Nil => outer
+  def pack[A](unpacked: List[A]): List[List[A]] = {
 
-    case h :: tail if outer.isEmpty =>
-      table += h -> 1
-      println(table)
-      pack(outer ::: List(List(h)), tail, table)
+    var outer: List[List[A]] = List()
+    var table: Map[A, Int] = Map()
 
-    case h :: tail  if !table.contains(h) =>
-        table += h -> (outer.size - 1)
-        println(table)
-        pack(outer ::: List(List(h)), tail, table)
+    for (i <- unpacked) {
 
-    case h :: tail =>
+      if (!outer.contains(List(i))) {
+        outer = outer :+ List(i)
+        table += (i -> 1)
 
-      pack(outer ::: List(List(h)), tail, table)
+      } else {
+        val newCnt = table.getOrElse(i, 1) + 1
+        table += (i -> newCnt)
+      }
+
+    }
+    outer
   }
-
 }
