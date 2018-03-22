@@ -4,7 +4,7 @@
   */
 object P09Another {
   def main(args: Array[String]) = {
-    val duplicatedList = List('a, 'a, 'a, 'b, 'b, 'a, 'c)
+    val duplicatedList = List('a, 'a, 'a, 'b, 'b, 'c, 'a, 'c)
     println(pack(duplicatedList))
   }
 
@@ -16,21 +16,25 @@ object P09Another {
     */
   def pack[A](unpacked: List[A]): List[List[A]] = {
 
-    var outer: List[List[A]] = List()
-    var table: Map[A, Int] = Map()
+    var outer: List[List[A]] = List() // ここに格納
+    var table: Map[A, Int] = Map() // 要素と outer での位置をマッピング
 
     for (i <- unpacked) {
-
-      if (!outer.contains(List(i))) {
+      if (outer.isEmpty) {
+        table += (i -> 0)
         outer = outer :+ List(i)
-        table += (i -> 1)
-
-      } else {
-        val newCnt = table.getOrElse(i, 1) + 1
-        table += (i -> newCnt)
       }
-
+      else if (!outer.contains(List(i))) {
+        outer = outer :+ List(i)
+        val lastIdx = outer.size - 1
+        table += (i -> lastIdx)
+      }
+      else {
+        val toPutIdx = table.getOrElse(i, 0)
+        println(i, toPutIdx)
+      }
     }
+
     outer
   }
 }
