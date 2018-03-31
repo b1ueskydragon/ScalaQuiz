@@ -3,7 +3,7 @@ import P10._
 object P11 {
   def main(args: Array[String]): Unit = {
     val target = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    //println(encodeModified(target))
+
     // List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
 
     println(_encodeModified(List(), encode(target)))
@@ -20,7 +20,8 @@ object P11 {
     case Nil => result
     case h :: tail
       if h._1 == 1 =>
-      _encodeModified(result :: List(h._2) , tail)
-    case h :: tail => _encodeModified(result ::: List(h) , tail)
+      _encodeModified(result ::: List(h._2), tail)
+    case h :: tail =>
+      _encodeModified(result ::: List(h), tail)
   }
 }
