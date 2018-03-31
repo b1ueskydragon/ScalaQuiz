@@ -1,10 +1,9 @@
 object P10 {
   def main(args: Array[String]): Unit = {
     val duplicatedList = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    println(encode(pack(duplicatedList)))
+    println(encode(duplicatedList))
   }
 
-  // Use method P09
   def pack[A](l: List[A]): List[List[A]] = {
     def _pack(outer: List[List[A]], unpacked: List[A]): List[List[A]] = unpacked match {
       case Nil => outer
@@ -18,10 +17,12 @@ object P10 {
     _pack(List(), l)
   }
 
-  def encode[A](packed: List[List[A]]): List[(Int, A)] = _encode(List(), packed)
-  
-  def _encode[A](tupList: List[(Int, A)], packed: List[List[A]]): List[(Int, A)] = packed match {
-    case Nil => tupList
-    case h :: tail => _encode(tupList ::: List((h.length, h.head)), tail)
+  def encode[A](packed: List[A]): List[(Int, A)] = {
+    def _encode(tupList: List[(Int, A)], packed: List[List[A]]): List[(Int, A)] = packed match {
+      case Nil => tupList
+      case h :: tail => _encode(tupList ::: List((h.length, h.head)), tail)
+    }
+
+    _encode(List(), pack(packed))
   }
 }
