@@ -29,7 +29,7 @@ object P09Another {
         table += (i -> 0)
         outer = outer :+ List(i)
       }
-      else if (!outer.contains(List(i))) {
+      else if (!table.contains(i)) {
         outer = outer :+ List(i)
         val lastIdx = outer.size - 1
         table += (i -> lastIdx)
