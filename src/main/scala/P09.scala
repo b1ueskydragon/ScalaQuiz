@@ -17,7 +17,9 @@ object P09 {
   }
 
   /**
-    * 重複を許すパターン (破壊的?)
+    * 重複を許すパターン
+    *
+    * :: と ::: -> 新たなコレクションを生成して返すため非破壊的
     *
     * @param outer    bigger one (initial status is Nil)
     * @param unpacked a target list unpacked yet (elements of outer)
