@@ -9,18 +9,16 @@ object P13 {
   }
 
   def _encodeDirect[A](result: List[(Int, A)], rawList: List[A]): List[(Int, A)] = rawList match {
-    case Nil => result
+    case h :: tail if result.nonEmpty && h == result.last._2 =>
+      println(h + " standard case 1")
+      _encodeDirect(result.init ::: List((result.last._1 + 1, h)), tail)
 
-    case h :: tail if tail.isEmpty => // rawList の末端
-      println(h)
-      result
-
-    case h :: tail if h != tail.head || result.isEmpty => // 前後の要素が異なる or rawList の先端
-      println(h)
+    case h :: tail =>
+      println(h + " standard case 2")
       _encodeDirect(result ::: List((1, h)), tail)
 
-    case h :: tail => // 前後の要素が同じ
-      println(h)
-      _encodeDirect(result.init ::: List((result.last._1 + 1, h)), tail)
+    case Nil =>
+      println("tail empty")
+      result
   }
 }
