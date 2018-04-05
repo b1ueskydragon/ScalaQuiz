@@ -9,9 +9,9 @@ object P13 {
   /**
     * not using P09#pack ver.
     *
-    * @param rawList
-    * @tparam A
-    * @return
+    * @param rawList original list
+    * @tparam A type
+    * @return packed list
     */
   def encodeDirect[A](rawList: List[A]): List[(Int, A)] = {
     def _encodeDirect(result: List[(Int, A)], rawList: List[A]): List[(Int, A)] = rawList match {
@@ -37,10 +37,10 @@ object P13 {
     * write case `rawList == Nil` at first
     * (to prevent Exception caused by Nil.head).
     *
-    * @param result
-    * @param rawList
-    * @tparam A
-    * @return
+    * @param result  packed list
+    * @param rawList original list
+    * @tparam A type
+    * @return result
     */
   def encodeDirectUseSpan[A](result: List[(Int, A)], rawList: List[A]): List[(Int, A)] = {
     rawList match {
@@ -48,8 +48,7 @@ object P13 {
       case someList =>
         println(rawList.head + " now looking")
         val (pack, unpack) = rawList span (_ == rawList.head)
-        encodeDirectUseSpan(
-          result ::: List((pack.length, rawList.head)), unpack)
+        encodeDirectUseSpan(result ::: List((pack.length, rawList.head)), unpack)
     }
   }
 }
