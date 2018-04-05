@@ -6,13 +6,11 @@ object P15 {
 
   def duplicateN[A](n: Int, ori: List[A]): List[A] = {
     val globalN = n
-
-    def _duplicateN(n: Int, result: List[A], list: List[A]): List[A] = list match {
+    def _duplicateN(n: Int, result: List[A], ori: List[A]): List[A] = ori match {
       case Nil => result
-      case h :: _ if n > 1 => _duplicateN(n - 1, result ::: List(h), list)
+      case lst if n > 1 => _duplicateN(n - 1, result ::: List(lst.head), ori)
       case h :: tail => _duplicateN(globalN, result ::: List(h), tail)
     }
-
     _duplicateN(globalN, List(), ori)
   }
 }
