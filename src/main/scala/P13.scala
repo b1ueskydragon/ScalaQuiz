@@ -1,8 +1,8 @@
 object P13 {
   def main(args: Array[String]): Unit = {
-
     val target = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
     println(encodeDirect(target))
+    println()
     println(encodeDirectUseSpan(List(), target))
   }
 
@@ -45,7 +45,7 @@ object P13 {
   def encodeDirectUseSpan[A](result: List[(Int, A)], rawList: List[A]): List[(Int, A)] = {
     rawList match {
       case Nil => result
-      case someList =>
+      case _ =>
         println(rawList.head + " now looking")
         val (pack, unpack) = rawList span (_ == rawList.head)
         encodeDirectUseSpan(result ::: List((pack.length, rawList.head)), unpack)
