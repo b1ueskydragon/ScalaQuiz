@@ -4,7 +4,6 @@ object P15 {
     println(duplicateN(3, target))
     println()
     println(duplicateNUseFill(3, target))
-
   }
 
   def duplicateN[A](n: Int, ori: List[A]): List[A] = {
@@ -19,7 +18,5 @@ object P15 {
     _duplicateN(globalN, List(), ori)
   }
 
-  def duplicateNUseFill[A](n: Int, ori: List[A]): List[A] = ori.flatMap {
-    e => List.fill(n)(e)
-  }
+  def duplicateNUseFill[A](n: Int, ori: List[A]): List[A] = ori.flatMap(List.fill(n)(_))
 }
