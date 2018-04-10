@@ -3,9 +3,6 @@ object P18 {
     val target = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
     println(slice(3, 7, target)) //List('d, 'e, 'f, 'g)
   }
-
-  def slice[A](to: Int, from: Int, l: List[A]): List[Any] = l.map {
-    case e if l.indexOf(e) >= to && l.indexOf(e) < from => e
-    case _ => ""
-  }.filter(e => e != "")
+  // ... if there are duplicated element, it will not work
+  def slice[A](to: Int, from: Int, l: List[A]): List[A] = l.filter(e => l.indexOf(e) >= to && l.indexOf(e) < from)
 }
