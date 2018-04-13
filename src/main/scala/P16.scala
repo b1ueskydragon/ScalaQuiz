@@ -4,6 +4,7 @@ object P16 {
     println(drop(3, target))
     println(dropTailRecursion(3, target))
     println(dropRecursion(3, target))
+    println(dropOneLiner(3, target))
   }
 
   def drop[A](n: Int, l: List[A]): List[A] = l.flatMap {
@@ -32,5 +33,9 @@ object P16 {
 
     _append(n, l)
   }
+
+  // make functional.
+  // [[ zipWithIndex ]] python enumerate のような感じで index と value マッピング.
+  def dropOneLiner[A](n: Int, l: List[A]): List[A] = l.zipWithIndex filter (e => (e._2 + 1) % n != 0) map (_._1)
 }
 
