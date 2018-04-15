@@ -19,4 +19,6 @@ object P19 {
 
     _rotate(i, List(), List(), l)
   }
+
+  // TODO use functional expression
 }
