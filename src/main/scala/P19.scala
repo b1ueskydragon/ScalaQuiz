@@ -8,7 +8,7 @@ object P19 {
     println(rotateAnother(-2, target))
 
     println(rotateTakeDrop(3, target))
-    println(rotateTakeDrop(-4, target))
+    println(rotateTakeDrop(-2, target))
   }
 
   def rotate[A](i: Int, l: List[A]): List[A] = {
@@ -37,6 +37,6 @@ object P19 {
   // take and drop
   def rotateTakeDrop[A](i: Int, l: List[A]): Any = {
     if (i >= 0) (l drop i) ::: (l take i)
-    else (l drop (l.length + i)) ::: (l.reverse drop -i).reverse
+    else (l drop (l.length + i)) ::: (l take l.length + i)
   }
 }
