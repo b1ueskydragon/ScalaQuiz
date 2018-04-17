@@ -3,6 +3,9 @@ object P19 {
     val target = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
     println(rotate(3, target)) //  List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
     println(rotate(-2, target)) //  List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
+
+    println(rotateAnother(3, target))
+    println(rotateAnother(-2, target))
   }
 
   def rotate[A](i: Int, l: List[A]): List[A] = {
@@ -18,6 +21,13 @@ object P19 {
     }
 
     _rotate(i, List(), List(), l)
+  }
+
+  // [[ scala.Array.:+ ]] A copy of this array with an element appended.
+  def rotateAnother[A](i: Int, l: List[A]): List[A] = l match {
+    case init :+ last if i < 0 => rotateAnother(i + 1, last :: init)
+    case h :: tail if i > 0 => rotateAnother(i - 1, tail :+ h)
+    case _ => l
   }
 
   // TODO use functional expression
