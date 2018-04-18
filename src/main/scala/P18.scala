@@ -6,6 +6,7 @@ object P18 {
     println(sliceTake(3, 7, target))
     println(sliceRecursion(3, 7, target))
     println(sliceRecursionTail(3, 7, target))
+    println(sliceRecursionAnother(3, 7, target))
   }
 
   def sliceDrop[A](to: Int, from: Int, l: List[A]): List[A] = l.drop(to).dropRight(from - to)
@@ -38,6 +39,17 @@ object P18 {
     _recursion(0, l, Nil)
   }
 
-  // ... if there are duplicated element, it won't work
-  def sliceIndexFilter[A](to: Int, from: Int, l: List[A]): List[A] = l.filter(e => l.indexOf(e) >= to && l.indexOf(e) < from)
+  def sliceRecursionAnother[A](left: Int, right: Int, l: List[A]): List[A] = {
+    def _recursion(rst: List[A], left: Int, right: Int, l: List[A]): List[A] = l match {
+      case h :: tail if left > 0 =>
+        println(h + " : left")
+        _recursion(rst, left - 1, right - 1, tail)
+      case h :: tail if right > 0 =>
+        println(h + " : right")
+        _recursion(rst ::: List(h), 0, right - 1, tail)
+      case _ => rst // 範囲を狭め続けた結果. left, right is zero
+    }
+
+    _recursion(List(), left, right, l)
+  }
 }
