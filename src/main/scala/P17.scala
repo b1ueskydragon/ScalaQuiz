@@ -12,4 +12,6 @@ object P17 {
     case h :: tail if left.length < n => splitRecursion(n, left ::: List(h), right, tail)
     case h :: tail => splitRecursion(n, left, right ::: List(h), tail)
   }
+
+  // TODO add case
 }
