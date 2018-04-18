@@ -9,11 +9,11 @@ object P18 {
     println(sliceRecursionAnother(3, 7, target))
   }
 
-  def sliceDrop[A](to: Int, from: Int, l: List[A]): List[A] = l.drop(to).dropRight(from - to)
+  def sliceDrop[A](from: Int, to: Int, l: List[A]): List[A] = l.drop(from).dropRight(to - from)
 
   def sliceFunction[A](i: Int, k: Int, l: List[A]): List[A] = l.slice(i, k)
 
-  def sliceTake[A](to: Int, from: Int, l: List[A]): List[A] = l.take(from).drop(to)
+  def sliceTake[A](from: Int, to: Int, l: List[A]): List[A] = l.take(to).drop(from)
 
   // start and end point is fixed.
   def sliceRecursion[A](start: Int, end: Int, l: List[A]): List[A] = {
