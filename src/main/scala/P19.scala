@@ -9,6 +9,10 @@ object P19 {
 
     println(rotateTakeDrop(3, target))
     println(rotateTakeDrop(-2, target))
+
+    println(rotate(14, target)) // out of length return itself
+    println(rotateAnother(14, target))
+    println(rotateBound(14, target))
   }
 
   def rotate[A](i: Int, l: List[A]): List[A] = {
@@ -32,6 +36,12 @@ object P19 {
     case h :: tail if i > 0 => rotateAnother(i - 1, tail :+ h)
     case init :+ last if i < 0 => rotateAnother(i + 1, last :: init)
     case _ => l
+  }
+
+  def rotateBound[A](i: Int, l: List[A]): List[A] = {
+    val bound = if (l.isEmpty) 0 else i % l.length
+    if (bound < 0) rotateBound(bound + l.length, l)
+    else (l drop bound) ::: (l take bound)
   }
 
   // take and drop
