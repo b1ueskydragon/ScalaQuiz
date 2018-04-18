@@ -1,3 +1,5 @@
+package another
+
 
 /**
   * P09 の重複を許さないパターン
