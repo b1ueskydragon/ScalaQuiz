@@ -5,6 +5,18 @@ object P16 {
     println(dropTailRecursion(3, target))
     println(dropRecursion(3, target))
     println(dropOneLiner(3, target))
+    println(dropAnother(3, target))
+
+  }
+
+  def dropAnother[A](n: Int, l: List[A]): List[A] = {
+    def _dropOrAppend(res: List[A], cnt: Int, l: List[A]): List[A] = l match {
+      case Nil => res
+      case h :: tail if cnt < (n - 1) => _dropOrAppend(res ::: List(h), cnt + 1, tail)
+      case _ => _dropOrAppend(res, 0, l.tail) // reset counter
+    }
+
+    _dropOrAppend(List(), 0, l)
   }
 
   def drop[A](n: Int, l: List[A]): List[A] = l.flatMap {
