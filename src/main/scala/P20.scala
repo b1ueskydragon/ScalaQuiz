@@ -2,6 +2,7 @@ object P20 {
   def main(args: Array[String]): Unit = {
     val target = List('a, 'b, 'c, 'd)
     println(removeAt(3, target)) // (List('a, 'c, 'd),'b)
+    println(removeAtAnother(2, target))
   }
 
   def removeAt[A](n: Int, l: List[A]): (List[A], A) = {
@@ -12,5 +13,14 @@ object P20 {
     }
 
     (_recursion(Nil, n, l), l(n))
+  }
+
+  def removeAtAnother[A](n: Int, l: List[A]): (List[A], A) = {
+    (n, l) match {
+      case (0, h :: tail) => (tail, h) // exit case
+      case (_, h :: tail) =>
+        val (t, re) = removeAtAnother(n - 1, tail)
+        (h :: t, re)
+    }
   }
 }
