@@ -7,17 +7,10 @@ object P21 {
   def insertAt[A](newEl: A, place: Int, l: List[A]): List[A] = {
     def recursion(p: Int, rst: List[A], ori: List[A]): List[A] = ori match {
       case Nil => rst
-      case h :: tail if p < place =>
-        println(h)
-        recursion(p + 1, rst :+ h, tail)
-      case h :: tail if p == place =>
-        println(h)
-        recursion(p + 1, rst :+ newEl :+ h, tail)
-      case _ =>
-        println(ori.head)
-        recursion(p + 1, rst ::: ori, Nil) // 残りはそのままくっつける
+      case h :: tail if p < place => recursion(p + 1, rst :+ h, tail)
+      case _ => recursion(p + 1, rst ++ List(newEl) ++ ori, Nil)
     }
 
-    recursion(0, Nil, l) // TODO reverse ver
+    recursion(0, Nil, l)
   }
 }
