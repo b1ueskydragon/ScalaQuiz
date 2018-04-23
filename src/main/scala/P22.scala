@@ -1,6 +1,7 @@
 object P22 {
   def main(args: Array[String]): Unit = {
     println(range(4, 9)) //  List(4, 5, 6, 7, 8, 9)
+    println(rangeSimple(4, 9))
   }
 
   def range(from: Int, to: Int): List[Int] = {
@@ -11,4 +12,6 @@ object P22 {
 
     recursion(0, from, Nil)
   }
+
+  def rangeSimple(start: Int, end: Int): List[Int] = start to end toList
 }
