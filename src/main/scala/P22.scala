@@ -4,9 +4,9 @@ object P22 {
   }
 
   def range(from: Int, to: Int): List[Int] = {
-    def recursion(cnt: Int, start: Int, rst: List[Int]): List[Int] = cnt match {
-      case _ if cnt <= to - from => recursion(cnt + 1, start + 1, rst :+ start)
-      case _ => rst
+    def recursion(cnt: Int, start: Int, rst: List[Int]): List[Int] = {
+      if (cnt <= to - from) recursion(cnt + 1, start + 1, rst :+ start)
+      else rst
     }
 
     recursion(0, from, Nil)
