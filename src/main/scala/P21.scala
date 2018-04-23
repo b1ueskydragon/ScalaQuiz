@@ -5,10 +5,16 @@ object P21 {
   }
 
   def insertAt[A](newEl: A, place: Int, l: List[A]): List[A] = {
-    def recursion(p: Int, rst: List[A], ori: List[A]): List[A] = ori match {
-      case Nil => rst
-      case h :: tail if p < place => recursion(p + 1, rst :+ h, tail)
-      case _ => recursion(p + 1, rst ++ List(newEl) ++ ori, Nil)
+    def recursion(p: Int, rst: List[A], ori: List[A]): List[A] = {
+      if (place >= l.length)
+        l :+ newEl
+      //throw new NoSuchElementException
+
+      else ori match {
+        case Nil => rst
+        case h :: tail if p < place => recursion(p + 1, rst :+ h, tail)
+        case _ => recursion(p + 1, rst ++ List(newEl) ++ ori, Nil)
+      }
     }
 
     recursion(0, Nil, l)
