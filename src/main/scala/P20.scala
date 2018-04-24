@@ -2,7 +2,7 @@ object P20 {
   def main(args: Array[String]): Unit = {
     val target = List('a, 'b, 'c, 'd)
     println(removeAt(3, target)) // (List('a, 'c, 'd),'b)
-    println(removeAtAnother(2, target))
+    println(removeAtAnother(3, target))
   }
 
   def removeAt[A](n: Int, l: List[A]): (List[A], A) = {
