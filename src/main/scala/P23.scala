@@ -1,11 +1,15 @@
 import scala.util.Random
 
+import P20.removeAt
+
 object P23 {
   def main(args: Array[String]): Unit = {
     val target = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h)
     println(randomSelectRec(3, target))
     println(randomSelectTake(3, target))
     println(randomSelectDrop(3, target))
+
+    println(randomSelect(3, target))
 
     // e.g. List('e, 'd, 'a)
   }
@@ -23,5 +27,10 @@ object P23 {
 
   def randomSelectDrop[A](n: Int, l: List[A]): List[A] = Random.shuffle(l).drop(l.length - n)
 
+
   // TODO Use the solution to problem P20
+
+  def randomSelect[A](n: Int, l: List[A]) = {
+    removeAt(Random.nextInt(n), l)
+  }
 }
