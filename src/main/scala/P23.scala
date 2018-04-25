@@ -34,4 +34,6 @@ object P23 {
 
     recursion(0, Nil, l)
   }
+
+  // TODO Add case with p20 only do random at once
 }
