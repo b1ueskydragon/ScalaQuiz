@@ -1,7 +1,5 @@
 import scala.util.Random
 
-import P20.removeAt
-
 object P23 {
   def main(args: Array[String]): Unit = {
     val target = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h)
@@ -27,10 +25,13 @@ object P23 {
 
   def randomSelectDrop[A](n: Int, l: List[A]): List[A] = Random.shuffle(l).drop(l.length - n)
 
+  def randomSelect[A](n: Int, l: List[A]): List[A] = {
+    import P20.removeAt
+    def recursion(cnt: Int, rst: List[A], l: List[A]): List[A] = l match {
+      case _ if cnt < n => recursion(cnt + 1, rst :+ removeAt(Random.nextInt(l.length), l)._2, l.tail)
+      case _ => rst
+    }
 
-  // TODO Use the solution to problem P20
-
-  def randomSelect[A](n: Int, l: List[A]) = {
-    removeAt(Random.nextInt(n), l)
+    recursion(0, Nil, l)
   }
 }
