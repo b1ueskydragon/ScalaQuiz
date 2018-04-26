@@ -11,6 +11,7 @@ object P23 {
 
     println(randomSelectEach(3, target))
     println(randomSelectOnce(3, target))
+
     // e.g. List('e, 'd, 'a)
   }
 
@@ -37,7 +38,14 @@ object P23 {
   }
 
   // case with p20 only do random at once
-  def randomSelectOnce[A](n: Int, l: List[A]) = {
-    removeAt(Random.nextInt(l.length), l)
+  def randomSelectOnce[A](n: Int, l: List[A]): List[A] = {
+    def _recursion(n: Int, l: List[A], res: List[A]): List[A] = {
+      if (n > 0) {
+        val (rest, el) = removeAt(Random.nextInt(l.length), l)
+        _recursion(n - 1, rest, el :: res)
+      } else res
+    }
+
+    _recursion(n, l, Nil)
   }
 }
