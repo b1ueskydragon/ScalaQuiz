@@ -15,7 +15,7 @@ object P26 {
   def combinations[A](n: Int, origin: List[A]): List[List[A]] = {
     val outer = new mutable.MutableList[List[A]]
 
-    def recursion(current: List[A], eachList: List[A]): mutable.MutableList[List[A]] = current match {
+    def recursion(current: List[A], eachList: List[A]): outer.type = current match {
         case _ if eachList.length == n => outer += eachList.reverse // concat to Result
         case _ if current.length + eachList.length < n => outer // nothing to do, since current and eachList cannot generate `n` length parts.
         case h :: tail =>
