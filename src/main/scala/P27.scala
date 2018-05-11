@@ -4,7 +4,7 @@ import scala.collection.mutable
 
 object P27 {
   def main(args: Array[String]): Unit = {
-    val sample = List("A", "B", "C", "D", "E", "F", "G", "H", "I")
+    val sample = List("A", "B", "C", "D", "E", "F")
     // println(group3(sample))
 
     val pattern = List(2, 3, 4)
@@ -22,16 +22,18 @@ object P27 {
 
   // specify a list of group sizes and the predicate will return a list of groups
   def group[A](patterns: List[Int], origin: List[A]): List[Any] = {
+    // each is each element of outerRes
+    val outerRes = new mutable.MutableList[List[Any]]
 
-    // each is each element of outerRes.
-    def _rec(p: List[Int], l: List[Any], each: List[Any], outerRes: List[Any]): List[Any] = p match {
+    def _rec(p: List[Int], l: List[Any], each: List[Any]): outerRes.type = p match {
       case h :: tail =>
         val seq = combinations(h, l)
-        seq.head :: _rec(tail, l, each, each :: outerRes)
+        outerRes += each :: (seq.head :: combinations(tail.head, l diff seq.head))
+
       case Nil => outerRes
     }
 
-    _rec(patterns, origin, Nil, Nil)
+    _rec(patterns, origin, List()).toList
   }
 
   // deal with only 3-lengthed-pattern-list
