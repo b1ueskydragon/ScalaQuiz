@@ -1,14 +1,14 @@
 import P26.combinations
 
-import scala.collection.mutable
-
 object P27 {
   def main(args: Array[String]): Unit = {
-    val sample = List("A", "B", "C", "D", "E", "F")
-    // println(group3(sample))
+    val sample = List("A", "B", "C", "D", "E", "F", "G", "H", "I")
+    //println(group3(sample))
 
     val pattern = List(2, 3, 4)
-    println(group(pattern, sample))
+    //println(group3n(pattern, sample))
+
+    println(groupN(pattern, sample))
   }
 
   // determine first (_,_) (_,_,_) then can get (_,_,_,_) automatically
@@ -20,29 +20,14 @@ object P27 {
     } yield List(_2, _3, tail diff _3)
   }
 
-  // specify a list of group sizes and the predicate will return a list of groups
-  def group[A](patterns: List[Int], origin: List[A]): List[Any] = {
-    // each is each element of outerRes
-    val outerRes = new mutable.MutableList[List[Any]]
-
-    def _rec(p: List[Int], l: List[Any], each: List[Any]): outerRes.type = p match {
-      case h :: tail =>
-        val seq = combinations(h, l)
-        outerRes += each :: (seq.head :: combinations(tail.head, l diff seq.head))
-
-      case Nil => outerRes
-    }
-
-    _rec(patterns, origin, List()).toList
-  }
-
-  // deal with only 3-lengthed-pattern-list
-  def _group[A](patterns: List[Int], origin: List[A]): List[Any] = {
-    for {
-      a <- combinations(patterns.head, origin)
-      tail = origin diff a
-      b <- combinations(patterns.tail.head, tail)
-      // Pattern should be generated dynamically
-    } yield List(a, b, tail diff b)
+  def groupN[A](pattern: List[Int], origin: List[A]): List[List[List[A]]] = pattern match {
+    case Nil => List(List())
+    case h :: tail =>
+      combinations(h, origin) flatMap {
+        c =>
+          groupN(tail, origin diff c) map {
+            c :: _
+          }
+      }
   }
 }
