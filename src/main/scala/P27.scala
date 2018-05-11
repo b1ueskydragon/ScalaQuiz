@@ -21,19 +21,17 @@ object P27 {
   }
 
   // specify a list of group sizes and the predicate will return a list of groups
-  def group[A](patterns: List[Int], origin: List[A]): Any = {
-    val outerRes = new mutable.MutableList[Any]
+  def group[A](patterns: List[Int], origin: List[A]): List[Any] = {
 
-    def _rec(p: List[Int], l: List[A]): outerRes.type = (p, l) match {
-      case (ph :: ptail, _) =>
-        val rst = combinations(ph, l)
-        val remain = l diff rst
-        outerRes += _rec(ptail, remain)
-
-      case (Nil, _) => outerRes
+    // each is each element of outerRes.
+    def _rec(p: List[Int], l: List[Any], each: List[Any], outerRes: List[Any]): List[Any] = p match {
+      case h :: tail =>
+        val seq = combinations(h, l)
+        seq.head :: _rec(tail, l, each, each :: outerRes)
+      case Nil => outerRes
     }
 
-    _rec(patterns, origin)
+    _rec(patterns, origin, Nil, Nil)
   }
 
   // deal with only 3-lengthed-pattern-list
