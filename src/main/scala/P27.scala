@@ -3,11 +3,9 @@ import P26.combinations
 object P27 {
   def main(args: Array[String]): Unit = {
     val sample = List("A", "B", "C", "D", "E", "F", "G", "H", "I")
-    //println(group3(sample))
+    println(group3(sample))
 
     val pattern = List(2, 3, 4)
-    //println(group3n(pattern, sample))
-
     println(groupN(pattern, sample))
   }
 
