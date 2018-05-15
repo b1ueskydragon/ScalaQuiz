@@ -1,27 +1,25 @@
 object P05 {
   def main(args: Array[String]): Unit = {
     println(reverse(Dummy.myList))
-    println(reverseRecursion(Dummy.myList))
+    println(reverseRec(Dummy.myList))
 
-    print(reverseHelper(List(1, 2, 3, 4, 5)))
+    print(reverseTailRec(List(1, 2, 3, 4, 5)))
   }
 
   def reverse[A](l: List[A]): List[A] = l.reverse
 
-  def reverseRecursion[A](l: List[A]): List[A] = l match {
-    case h :: tail => reverseRecursion(tail) ::: List(h)
+  // O(n^2)
+  def reverseRec[A](l: List[A]): List[A] = l match {
+    case h :: tail => reverseRec(tail) ::: List(h)
     case Nil => Nil
   }
 
-  // :: 要素を List に連結
-  // ::: List 連結
-
-  def reverseHelper[A](l: List[A]): List[A] = {
-    def _reverse(res: List[A], rem: List[A]): List[A] = rem match {
+  def reverseTailRec[A](l: List[A]): List[A] = {
+    def _rec(res: List[A], rem: List[A]): List[A] = rem match { // `rem` is remaining. current.
       case Nil => res
-      case h :: tail => _reverse(h :: res, tail)
+      case h :: tail => _rec(h :: res, tail)
     }
 
-    _reverse(Nil, l)
+    _rec(Nil, l)
   }
 }
