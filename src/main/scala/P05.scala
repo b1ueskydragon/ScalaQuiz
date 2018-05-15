@@ -3,6 +3,7 @@ object P05 {
     println(reverse(Dummy.myList))
     println(reverseRec(Dummy.myList))
 
+    println(reverseFunc(List(1, 2, 3, 4, 5)))
     print(reverseTailRec(List(1, 2, 3, 4, 5)))
   }
 
@@ -12,6 +13,12 @@ object P05 {
   def reverseRec[A](l: List[A]): List[A] = l match {
     case h :: tail => reverseRec(tail) ::: List(h)
     case Nil => Nil
+  }
+
+  def reverseFunc[A](lst: List[A]): List[A] = {
+    lst.foldLeft(List[A]()) {
+      (res, h) => h :: res
+    }
   }
 
   def reverseTailRec[A](l: List[A]): List[A] = {
