@@ -1,4 +1,4 @@
-name := "ScalaGround"
+name := "ScalaQuiz"
 
 version := "1.0"
 
