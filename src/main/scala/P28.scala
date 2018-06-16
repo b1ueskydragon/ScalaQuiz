@@ -7,6 +7,7 @@ object P28 {
 
     println(lsortFreq(given))
     println(lsortFreqBy(given))
+    println(lsortFreqMapping(given))
     // List[List[Symbol]] = List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n))
   }
 
@@ -15,7 +16,7 @@ object P28 {
 
   def lsortBy[A](lists: List[List[A]]): List[List[A]] = lists.sortBy(_.length)
 
-  
+
   // b) sort the elements according to their length frequency (a more frequent length come later).
   def lsortFreq[A](lists: List[List[A]]): List[List[A]] = {
     val lengths = lists.map(_.length)
@@ -36,4 +37,7 @@ object P28 {
     _rec(0, list)
   }
 
+  // TODO frequency func or another ordering func with toSet
+
+  def lsortFreqMapping[A](lists: List[List[A]]) = lists.groupBy(_.length).toList.sortBy(_._2.length).flatMap(_._2)
 }
