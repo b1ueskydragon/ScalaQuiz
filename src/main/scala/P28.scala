@@ -27,6 +27,7 @@ object P28 {
     lists.sortBy(l => frequency(l.length, lists.map(_.length)))
   }
 
+  // count length in every loop. :\. should be kept in global table.
   def frequency[A](a: A, list: List[A]): Int = {
     def _rec(stack: Int, l: List[A]): Int = l match {
       case Nil => stack
@@ -36,8 +37,6 @@ object P28 {
 
     _rec(0, list)
   }
-
-  // TODO frequency func or another ordering func with toSet
 
   def lsortFreqMapping[A](lists: List[List[A]]) = lists.groupBy(_.length).toList.sortBy(_._2.length).flatMap(_._2)
 }
