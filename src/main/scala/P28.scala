@@ -1,3 +1,5 @@
+import scala.collection.mutable
+
 object P28 {
   def main(args: Array[String]): Unit = {
     val given = List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o))
@@ -8,6 +10,7 @@ object P28 {
     println(lsortFreq(given))
     println(lsortFreqBy(given))
     println(lsortFreqMapping(given))
+    println(lsortFreqGroupingManual(given))
     // List[List[Symbol]] = List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n))
   }
 
@@ -37,6 +40,16 @@ object P28 {
 
     _rec(0, list)
   }
+
+  def lsortFreqGroupingManual[A](lists: List[List[A]]) = {
+    val table = mutable.Map.empty[Int, List[List[A]]]
+    lists.foreach { l =>
+      val len = l.length
+      if (table.contains(len)) table.update(len, table.getOrElse(len, Nil) ::: List(l))
+      else table.update(len, List(l))
+    }
+    table
+  }.toList.sortBy(_._2.length).flatMap(_._2)
 
   def lsortFreqMapping[A](lists: List[List[A]]) = lists.groupBy(_.length).toList.sortBy(_._2.length).flatMap(_._2)
 }
