@@ -3,9 +3,11 @@ object P33 {
   def main(args: Array[String]) = {
     val a = 35
     val b = 64
-    println(isCoprimeTo(a, b))
+    println(new P33(a).isCoprimeTo(b))
   }
+}
 
+class P33(val given: Int) {
   import P32._
-  def isCoprimeTo(a: Int, b: Int): Boolean = if (gcd(a, b) == 1) true else false
+  def isCoprimeTo(n: Int): Boolean = gcd(given, n) == 1
 }
