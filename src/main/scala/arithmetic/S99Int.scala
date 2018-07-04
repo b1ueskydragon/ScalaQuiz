@@ -1,4 +1,5 @@
 package arithmetic {
+
   class S99Int(val start: Int) {
     import S99Int._
 
@@ -7,9 +8,13 @@ package arithmetic {
 
     def isCoprimeTo(n: Int): Boolean = gcd(start, n) == 1
     35.isCoprimeTo(64)
+
+    def totient: Int = (1 to start).count(isCoprimeTo)
+    10.totient
   }
 
   object S99Int {
     implicit def int2S99Int(i: Int): S99Int = new S99Int(i)
   }
+
 }
