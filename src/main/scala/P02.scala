@@ -1,14 +1,17 @@
 object P02 {
   def main(args: Array[String]) {
-    println(initPra(Dummy.yourList))
-    println(tailPra(Dummy.yourList))
+    lazy val target = List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+    lazy val target01 = List(1, 1, 2, 3, 5, 8)
 
-    println(penultimate(Dummy.myList))
+    println(initPra(target))
+    println(tailPra(target))
 
-    println(penultimateRecursion(Dummy.yourList))
-    println(penultimateRecursion_(Dummy.yourList))
+    println(penultimate(target01))
 
-    println(lastNth(2, Dummy.yourList))
+    println(penultimateRecursion(target))
+    println(penultimateRecursion_(target))
+
+    println(lastNth(2, target))
   }
 
   def initPra(l: List[Int]): List[Int] = {

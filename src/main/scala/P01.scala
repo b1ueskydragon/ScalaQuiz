@@ -1,7 +1,8 @@
 object P01 {
   def main(args: Array[String]): Unit = {
-    println(last(Dummy.myList))
-    println(lastRecursion(Dummy.myList))
+    val target = List(1, 1, 2, 3, 5, 8)
+    println(last(target))
+    println(lastRecursion(target))
   }
 
   def last[A](l: List[A]): A = l.last // last() already throws the NoSuchElementException

@@ -1,7 +1,9 @@
 object P04 {
   def main(args: Array[String]): Unit = {
-    println(length(Dummy.myList))
-    println(lengthRecursive(Dummy.myList))
+    val target = List(1, 1, 2, 3, 5, 8)
+
+    println(length(target))
+    println(lengthRecursive(target))
   }
 
   def length[A](l: List[A]): Int = l.length

@@ -1,7 +1,9 @@
 object P03 {
   def main(args: Array[String]): Unit = {
-    println(findKth(9, Dummy.yourList))
-    println(findKthRecursion(9, Dummy.yourList))
+    val target = List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+    val k = 9
+    println(findKth(k, target))
+    println(findKthRecursion(k, target))
   }
 
   def findKth[A](k: Int, l: List[A]): A = {

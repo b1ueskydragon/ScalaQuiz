@@ -4,7 +4,8 @@
   */
 object P08 {
   def main(args: Array[String]): Unit = {
-    println(compressRecursion(Dummy.duplicatedList))
+    val target = List('a', 'a', 'b', 'b', 'a', 'a', 'c', 'a', 'c', 'c', 'a', 'd', 'a')
+    println(compressRecursion(target))
   }
 
   def compressRecursion[A](l: List[A]): List[A] = l match {

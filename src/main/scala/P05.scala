@@ -1,10 +1,12 @@
 object P05 {
   def main(args: Array[String]): Unit = {
-    println(reverse(Dummy.myList))
-    println(reverseRec(Dummy.myList))
+    lazy val target = List(1, 1, 2, 3, 5, 8)
+    println(reverse(target))
+    println(reverseRec(target))
 
-    println(reverseFunc(List(1, 2, 3, 4, 5)))
-    print(reverseTailRec(List(1, 2, 3, 4, 5)))
+    lazy val target01 = List(1, 2, 3, 4, 5)
+    println(reverseFunc(target01))
+    print(reverseTailRec(target01))
   }
 
   def reverse[A](l: List[A]): List[A] = l.reverse

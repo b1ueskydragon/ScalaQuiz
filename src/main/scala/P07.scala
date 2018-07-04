@@ -1,7 +1,7 @@
 object P07 {
   def main(args: Array[String]): Unit = {
-    println(Dummy.nestedList)
-    println(flatten(Dummy.nestedList))
+    val target = List(List(1, 2), 3, List(4, List(5, 6)))
+    println(flatten(target))
   }
 
   def flatten[A](l: List[A]): List[A] = l match {

@@ -1,7 +1,8 @@
 object P06 {
   def main(args: Array[String]): Unit = {
-    println(isPalindrome(List(1, 2, 3, 2, 1)))
-    println(isPalindromeRecursion(List(1, 2, 3, 2, 1)))
+    val target = List(1, 2, 3, 2, 1)
+    println(isPalindrome(target))
+    println(isPalindromeRecursion(target))
   }
 
   def isPalindrome[A](l: List[A]): Boolean = l.reverse == l
