@@ -10,18 +10,17 @@ object P26 {
   }
 
   // all of each elements (type List[A]) length is same as `n`.
-  // eachList is looks like a stack.
-
+  // eachList would be each stack.
   def combinations[A](n: Int, origin: List[A]): List[List[A]] = {
     val outer = new mutable.MutableList[List[A]]
 
     def recursion(current: List[A], eachList: List[A]): outer.type = current match {
-        case _ if eachList.length == n => outer += eachList.reverse // concat to Result
-        case _ if current.length + eachList.length < n => outer // nothing to do, since current and eachList cannot generate `n` length parts.
-        case h :: tail =>
-          recursion(tail, h :: eachList) // recursion①
-          recursion(tail, eachList) // recursion②, each after exit from recursion①
-      }
+      case _ if eachList.length == n => outer += eachList.reverse // concat to Result
+      case h :: tail =>
+        recursion(tail, h :: eachList)
+        recursion(tail, eachList)
+      case _ => outer // nothing to do. case of current and eachList cannot generate `n` length parts.
+    }
 
     recursion(origin, List()).toList
   }
