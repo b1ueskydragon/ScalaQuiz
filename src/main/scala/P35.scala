@@ -12,6 +12,15 @@ object P35 {
 
   def primeFactors_(n: Int): List[Int] = {
     val primesToN = (2 to n).filter(isPrime).toList
-    primesToN.filter(n % _ == 0)
+
+    def _rec(n: Int, divisor: List[Int], res: List[Int]): List[Int] = divisor match {
+      case _ if isPrime(n) => List(n) ::: res // exit case
+      case h :: tail if n % h == 0 => _rec(n / h, tail, h :: res)
+      case h :: _ => _rec(n / primesToN.head, primesToN, h :: res)
+      // case List() => res // exit case
+    }
+
+    // _rec(n, primesToN, List()).reverse
+    _rec(n, primesToN, List()).sortWith(_ < _)
   }
 }
