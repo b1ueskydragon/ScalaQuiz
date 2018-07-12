@@ -4,7 +4,9 @@ object P35 {
   //  Construct a flat list containing the prime factors in ascending order.
   def main(args: Array[String]): Unit = {
     val given = new java.util.Scanner(System.in).nextInt() // 315
-    println(primeFactors_(given)) // List(3, 3, 5, 7)
+    val res00 = primeFactors_(given)
+    println(res00) // List(3, 3, 5, 7)
+    println(res00.product)
   }
 
   def primeFactors(n: Int) = {
@@ -19,7 +21,7 @@ object P35 {
       case h :: _ => _rec(n / primesToN.head, primesToN, h :: res)
       // case List() => res // exit case
     }
-
+    // TODO 奇数 ...
     // _rec(n, primesToN, List()).reverse
     _rec(n, primesToN, List()).sortWith(_ < _)
   }
