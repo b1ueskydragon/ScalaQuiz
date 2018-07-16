@@ -9,18 +9,15 @@ object P35 {
     println(res00.product)
   }
 
-  def primeFactors(n: Int) = {
-  }
-
   def primeFactors_(n: Int): List[Int] = {
-    val primesToN = (2 to n).filter(isPrime).toList
+    val primes = (2 to n).filter(isPrime).toList
 
-    def _rec(n: Int, divisor: List[Int], res: List[Int]): List[Int] = divisor match {
-      case _ if isPrime(n) => List(n) ::: res // exit case
-      case h :: tail if n % h != 0 => _rec(n, primesToN.tail, res) // s1) 除数で割り切れない場合
-      case h :: tail if n % h == 0 => _rec(n / h, tail, h :: res) // s2) 除数で割り切れる場合
+    def _rec(n: Int, div: List[Int]): List[Int] = div match {
+      case _ if isPrime(n) => List(n) // exit case
+      case h :: tail if n % h == 0 => h :: _rec(n / h, tail) // s1) 除数で割り切れる場合
+      case _ => _rec(n, primes.tail) // s2) 除数で割り切れない場合
     }
 
-    _rec(n, primesToN, List()).sortWith(_ < _)
+    _rec(n, primes).sortWith(_ < _)
   }
 }
