@@ -17,12 +17,10 @@ object P35 {
 
     def _rec(n: Int, divisor: List[Int], res: List[Int]): List[Int] = divisor match {
       case _ if isPrime(n) => List(n) ::: res // exit case
-      case h :: tail if n % h == 0 => _rec(n / h, tail, h :: res)
-      case h :: _ => _rec(n / primesToN.head, primesToN, h :: res)
-      // case List() => res // exit case
+      case h :: tail if n % h != 0 => _rec(n, primesToN.tail, res) // s1) 除数で割り切れない場合
+      case h :: tail if n % h == 0 => _rec(n / h, tail, h :: res) // s2) 除数で割り切れる場合
     }
-    // TODO 奇数 ...
-    // _rec(n, primesToN, List()).reverse
+
     _rec(n, primesToN, List()).sortWith(_ < _)
   }
 }
