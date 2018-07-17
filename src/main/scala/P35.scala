@@ -9,6 +9,12 @@ object P35 {
     println(res00.product)
   }
 
+  /**
+    * 最初単位で割り続ける. やりきってから次の head に進める.
+    *
+    * @param n dividend
+    * @return
+    */
   def primeFactors(n: Int): List[Int] = {
     val primes = (2 to n).filter(isPrime).toList
 
