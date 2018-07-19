@@ -31,9 +31,10 @@ object P36 {
     val primes = (2 to n).filter(isPrime).toList
 
     def _rec(n: Int, ps: List[Int], cnt: Int): Unit = {
-      if (isPrime(n)) {
-        if (outer.keySet.contains(n)) outer.update(n, cnt + 1)
-        else outer.update(n, 1)
+      if (isPrime(n)) { // exit case
+//        if (outer.keySet.contains(n)) outer.update(n, cnt + 1)
+//        else outer.update(n, 1)
+        outer.getOrElseUpdate(n, 1)
       }
       else if (n % ps.head == 0) {
         outer.update(ps.head, cnt + 1)
