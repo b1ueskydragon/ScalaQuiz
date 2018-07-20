@@ -45,4 +45,6 @@ object P36 {
     _rec(n, primes, 0)
     outer.toMap
   }
+
+  // TODO primeFactorMultiplicityMap with immutable Map
 }
