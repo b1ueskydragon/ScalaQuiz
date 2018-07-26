@@ -3,11 +3,9 @@ import P36._
 
 object P37 {
   def main(args: Array[String]): Unit = {
-    val given = new java.util.Scanner(System.in).nextInt()
-
+    lazy val given = new java.util.Scanner(System.in).nextInt()
     lazy val res00 = generalTerm(given)
     // println(res00)
-
     lazy val res01 = phi(given)
     println(res01)
   }
