@@ -1,7 +1,7 @@
 //Euler's so-called totient function phi(m) is defined as the number of positive integers r (1 <= r <= m) that are coprime to m.
 object P34 {
   def main(args: Array[String]): Unit = {
-    val n = 4
+    val n = 10
     println(totient(n)) // 4
   }
   import P33._
