@@ -22,4 +22,6 @@ object P37 {
   // the list of prime factors (and their multiplicities) of a given number N.
   // [[P1, M1], [P2, M2], [P3, M3], ...]
   def generalTerm(N: Int): List[(Int, Int)] = primeFactorMultiplicityList(N)
+
+  // TODO Use folding instead of product
 }
