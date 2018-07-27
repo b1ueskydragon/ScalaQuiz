@@ -7,16 +7,18 @@ object P37 {
     lazy val res00 = generalTerm(given)
     // println(res00)
     lazy val res01 = phi(given)
-    // println(res01)
-
+    println(res01)
     lazy val res02 = totientFast(given)
     println(res02)
   }
 
   // use folding
-  def totientFast(n: Int): ((Int, (Int, Int)) => Int) => Int = {
+  def totientFast(n: Int): Int = {
     // s 起点の引数, t タプル
-    primeFactorMultiplicityList(n).foldLeft(1)
+    primeFactorMultiplicityList(n).foldLeft(1) { (s, t) =>
+      t match {
+        case (p, m) => s * (p - 1) * pow(p, m - 1).toInt
+      }
     }
   }
 
