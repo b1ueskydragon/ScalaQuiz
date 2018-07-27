@@ -7,7 +7,17 @@ object P37 {
     lazy val res00 = generalTerm(given)
     // println(res00)
     lazy val res01 = phi(given)
-    println(res01)
+    // println(res01)
+
+    lazy val res02 = totientFast(given)
+    println(res02)
+  }
+
+  // use folding
+  def totientFast(n: Int): ((Int, (Int, Int)) => Int) => Int = {
+    // s 起点の引数, t タプル
+    primeFactorMultiplicityList(n).foldLeft(1)
+    }
   }
 
   // general term: (Pk - 1) x Pk^(Mk-1)
@@ -22,6 +32,4 @@ object P37 {
   // the list of prime factors (and their multiplicities) of a given number N.
   // [[P1, M1], [P2, M2], [P3, M3], ...]
   def generalTerm(N: Int): List[(Int, Int)] = primeFactorMultiplicityList(N)
-
-  // TODO Use folding instead of product
 }
