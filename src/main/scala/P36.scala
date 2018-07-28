@@ -8,11 +8,14 @@ object P36 {
   def main(args: Array[String]): Unit = {
     val given = new java.util.Scanner(System.in).nextInt() // 315
 
-    val resList = primeFactorMultiplicityList(given)
+    lazy val resList = primeFactorMultiplicityList(given)
     println(resList) // List((3,2), (5,1), (7,1))
 
-    val resMap = primeFactorMultiplicityMap(given)
+    lazy val resMap = primeFactorMultiplicityMap(given)
     println(resMap) // Map(3 -> 2, 5 -> 1, 7 -> 1)
+
+    lazy val res00 = primeFactorMultiplicity(given)
+    println(res00)
   }
 
   def primeFactorMultiplicityList(n: Int): List[(Int, Int)] = {
@@ -46,5 +49,28 @@ object P36 {
     outer.toMap
   }
 
-  // TODO primeFactorMultiplicityMap with immutable Map
+  // with immutable Map
+  def primeFactorMultiplicity(n: Int): Map[Int, Int] = {
+    lazy val primes = (2 to n).filter(isPrime).toList
+
+    // return is (count, dividend)
+    def _count(n: Int, p: Int): (Int, Int) = {
+      if (n % p != 0) (0, n)
+      else _count(n / p, p) match {
+        case (c, d) => (c + 1, d)
+      }
+    }
+
+    def _rec(n: Int, ps: List[Int]): Map[Int, Int] = {
+      if (n == 1) Map()
+      else if (isPrime(n)) Map(n -> 1)
+      else {
+        val nps = ps.dropWhile(n % _ != 0) // drop while condition matched (sorted required).
+        val (count, dividend) = _count(n, nps.head)
+        Map(nps.head -> count) ++ _rec(dividend, nps.tail)
+      }
+    }
+
+    _rec(n, primes)
+  }
 }
