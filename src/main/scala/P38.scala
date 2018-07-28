@@ -4,19 +4,27 @@ import P37._
 object P38 {
   def main(args: Array[String]): Unit = {
     lazy val given = 10090
-    lazy val res34 = totient(given)
-    lazy val res37 = phi(given)
 
-    val start34 = System.currentTimeMillis()
-    res34
-    val end34 = System.currentTimeMillis()
-    println(end34 - start34)
+    while (true) {
+      timeWatch("P37")(phi(given)) // TODO Improvement be required
+      timeWatch("P34")(totient(given))
+    }
+  }
 
-    val start37 = System.currentTimeMillis()
-    res37
-    val end37 = System.currentTimeMillis()
-    println(end37 - start37)
-
-    // TODO Make clock (OR time) function
+  /**
+    * : => Runtime evaluation of params (NOT a compile evaluation)
+    *
+    * Why doesn't use return type `Unit`?
+    *
+    * @param label label printed
+    * @param block a function
+    * @tparam A return type of function
+    * @return
+    */
+  def timeWatch[A](label: String)(block: => A): A = {
+    val start: Long = System.currentTimeMillis()
+    val ret: A = block
+    println(label + ": " + (System.currentTimeMillis() - start) + " ms.")
+    ret
   }
 }
