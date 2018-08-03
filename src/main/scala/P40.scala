@@ -6,10 +6,11 @@ object P40 {
     val given = 28
     lazy val res = goldbach(given)
     println(res)
+    lazy val res01 = golabachFast(given)
+    println(res01)
   }
 
   def goldbach(even: Int): (Int, Int) = {
-    // TODO range setting ?
     val primes = Stream.from(3, 2).filter(isPrime_).take(even).toList // 2 is excluded
 
     // rights は最初の状態では left をも含む.
@@ -20,5 +21,14 @@ object P40 {
     }
 
     _rec(primes.head, primes, primes)
+  }
+
+  def golabachFast(even: Int): (Int, Int) = {
+    val primes = Stream.from(3, 2).filter(isPrime_).take(even) // 2 is excluded
+    // p is a cursor
+    primes.takeWhile(_ < even).find(p => isPrime(even - p)) match {
+      case Some(p) => (p, even - p)
+      case _ => throw new IllegalArgumentException
+    }
   }
 }
