@@ -2,7 +2,11 @@ object P26_ {
 
   def flatMapSublists[I, O](ls: List[I])(f: List[I] => List[O]): List[O] = ls match {
     case Nil => Nil
-    case _ :: tail => f(ls) ::: flatMapSublists(tail)(f)
+    case _ :: tail =>
+      val car = f(ls)
+      val cdr = flatMapSublists(tail)(f)
+
+      car ::: cdr
   }
 
   def main(args: Array[String]): Unit = {
