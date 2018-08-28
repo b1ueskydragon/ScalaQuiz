@@ -2,14 +2,14 @@ object P26_ {
 
   def cdrs[A](ls: List[A])(f: List[A] => List[List[A]]): List[List[A]] = ls match {
     case Nil => Nil
-    case _ :: tail => f(ls) ::: cdrs(tail)(f)
+    case _ :: tail => f(ls) ::: cdrs(tail)(f) // f(ls), Change to nested list before append.
   }
 
   def combinations[A](n: Int, ori: List[A]): List[List[A]] = {
     if (n == 0) List(Nil)
     else cdrs(ori) { sl =>
       combinations(n - 1, sl.tail) map { c =>
-        sl.head :: c // append a head to an element(List[A]) from combinations.
+        sl.head :: c // Append a head to an element(List[A]) from combinations.
       }
     }
   }
