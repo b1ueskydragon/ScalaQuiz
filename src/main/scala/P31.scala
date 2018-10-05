@@ -18,5 +18,5 @@ object P31 {
     if (n < 2 || (n != 2 && n % 2 == 0)) false
     else (for (i <- 3 to n by 2; isComp = n % i != 0; if i * i <= n && !isComp) yield isComp).isEmpty
 
-  val primes = Stream.cons(2, Stream.from(3, 2).filter(isPrime))
+  def primes = Stream.cons(2, Stream.from(3, 2).filter(isPrime_))
 }
