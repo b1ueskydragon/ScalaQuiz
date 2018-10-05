@@ -6,7 +6,7 @@ object P40 {
     val given = 28
     lazy val res = goldbach(given)
     println(res)
-    lazy val res01 = golabachFast(given)
+    lazy val res01 = goldbachFast(given)
     println(res01)
   }
 
@@ -23,7 +23,7 @@ object P40 {
     _rec(primes.head, primes, primes)
   }
 
-  def golabachFast(even: Int): (Int, Int) = {
+  def goldbachFast(even: Int): (Int, Int) = {
     val primes = Stream.from(3, 2).filter(isPrime_).take(even) // 2 is excluded
     // p is a cursor
     primes.takeWhile(_ < even).find(p => isPrime(even - p)) match {
