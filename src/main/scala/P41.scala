@@ -1,23 +1,24 @@
 object P41 {
-  // Given a range of integers by its lower and upper limit,
-  // print a list of all even numbers and their Goldbach composition.
+  // Given a range and print a list of all even numbers and their Goldbach composition.
   def main(args: Array[String]): Unit = {
-    lazy val res00 = goldbach(10)
-    lazy val res01 = goldbach(12)
-    println(res00)
-    println(res01)
+    printGoldbachList(9 to 20)
 
-    // e.g)
-    //  printGoldbachList(9 to 20)
-    // 10 = 3 + 7
-    // 12 = 5 + 7
-    // 14 = 3 + 11
-    // 16 = 3 + 13
-    // 18 = 5 + 13
-    // 20 = 3 + 17
+    // Find out how many both primes are bigger than 50 cases in the range 2..3000.
+    //  printGoldbachListLimited(1 to 2000, 50)
+    //  992 = 73 + 919
+    //  1382 = 61 + 1321
+    //  1856 = 67 + 1789
+    //  1928 = 61 + 1867
   }
 
-  def printGoldbachList(range: Range): Unit = {
+  def printGoldbachList(range: Range) {
+    range.filter(_ % 2 == 0).foreach { k =>
+      val pair = goldbach(k)
+      println(s"""$k = ${pair._1} + ${pair._2}""")
+    }
+  }
+
+  def printGoldbachListLimited(range: Range, low: Int) {
     // TODO
   }
 
@@ -27,6 +28,7 @@ object P41 {
 
     primes.takeWhile(_ < even).find(p => isPrime(even - p)) match {
       case Some(p) => (p, even - p)
+      case _ => throw new IllegalArgumentException
     }
   }
 }
