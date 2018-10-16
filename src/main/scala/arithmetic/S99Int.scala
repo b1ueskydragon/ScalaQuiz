@@ -9,22 +9,20 @@ package arithmetic {
 
     // Put a limit on `isPrime` to the square root.
     def isPrime: Boolean = (num > 1) && (primes.takeWhile { ph => ph <= Math.sqrt(num) } forall { ph => num % ph != 0 })
-
-    // Euclid's algorithm.
-    def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
   }
 
   object S99Int {
-    /** @param num Default is 0 */
-    implicit def int2S99Int(num: Int = 0): S99Int = new S99Int(num)
+
+    implicit def int2S99Int(num: Int): S99Int = new S99Int(num)
+
+    // Euclid's algorithm.
+    def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
 
     def main(args: Array[String]): Unit = {
       // P31
       println(31.isPrime)
-
       // P32
-      println(int2S99Int().gcd(12, 40))
-
+      println(gcd(12, 40))
     }
   }
 
