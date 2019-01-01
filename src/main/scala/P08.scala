@@ -10,6 +10,8 @@ object P08 {
     val target = "aaabccaadeeee".toList
     println(compress(target))
     println(compress__(target))
+    println(compress___(target))
+    println(compress____(target))
   }
 
   def compress[A](l: List[A]): List[A] = {
@@ -29,5 +31,22 @@ object P08 {
     case h :: tail if h == tail.head => compress__(tail) // standard case 1. head と tail.head が同じなら tail.head を持ってきて 元の head をとる
     case h :: tail => h :: compress__(tail) // standard case 2. head と tail.head が異なる場合, 何もしない (そのままくっつける)
   }
+
+  def compress___[A](l: List[A]): List[A] = {
+    @tailrec
+    def rec(acc: List[A], l: List[A]): List[A] = l match {
+      case Nil => acc.reverse
+      case h :: tail => rec(h :: acc, tail.dropWhile(h == _))
+    }
+
+    rec(List(), l)
+  }
+
+  def compress____[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case h :: tail => h :: compress____(tail.dropWhile(h == _))
+  }
+
+  def compress_____[A](l: List[A]): List[A] = ??? // TODO foldr
 
 }
