@@ -12,6 +12,7 @@ object P08 {
     println(compress__(target))
     println(compress___(target))
     println(compress____(target))
+    println(compress_____(target))
   }
 
   def compress[A](l: List[A]): List[A] = {
@@ -47,6 +48,10 @@ object P08 {
     case h :: tail => h :: compress____(tail.dropWhile(h == _))
   }
 
-  def compress_____[A](l: List[A]): List[A] = ??? // TODO foldr
+  def compress_____[A](l: List[A]): List[A] = l.foldRight(List[A]()) { (x, acc) =>
+    if (acc.isEmpty) List(x)
+    else if (x != acc.head) x :: acc
+    else acc
+  }
 
 }
