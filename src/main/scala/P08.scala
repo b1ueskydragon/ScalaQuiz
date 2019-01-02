@@ -49,9 +49,7 @@ object P08 {
   }
 
   def compress_____[A](l: List[A]): List[A] = l.foldRight(List[A]()) { (x, acc) =>
-    if (acc.isEmpty) List(x)
-    else if (x != acc.head) x :: acc
-    else acc
+    if (acc.isEmpty || x != acc.head) x :: acc else acc
   }
 
 }
