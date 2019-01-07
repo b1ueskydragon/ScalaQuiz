@@ -6,6 +6,7 @@ object P09 {
     lazy val given = List('a, 'a, 'a, 'b, 'b, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
     println(pack_(given))
     println(pack(given))
+    println(pack__(given))
   }
 
   def pack_[A](l: List[A]): List[List[A]] = {
@@ -36,6 +37,14 @@ object P09 {
       // standard else case: there is a sublist, so put it in
       case h :: tail => rec(res.init ::: List(res.last ::: List(h)), tail)
     }
+
+    rec(List(), l)
+  }
+
+  def pack__[A](l: List[A]): List[List[A]] = {
+    @tailrec
+    def rec(acc: List[List[A]], xs: List[A]): List[List[A]] =
+      if (xs.isEmpty) acc.reverse else rec(xs.takeWhile(_ == xs.head) :: acc, xs.dropWhile(_ == xs.head))
 
     rec(List(), l)
   }
