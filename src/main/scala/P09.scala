@@ -1,56 +1,30 @@
-/**
-  * Pack consecutive duplicates of list elements into sublists.
-  *
-  * 重複を除いている訳ではない
+import scala.annotation.tailrec
+
+/** Pack consecutive duplicates of list elements into sublists.
   */
 object P09 {
-  def main(args: Array[String]) = {
-    lazy val duplicatedList = List('a, 'a, 'a, 'b, 'b, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    println(pack(List(), duplicatedList))
+  def main(args: Array[String]): Unit = {
+    lazy val given = List('a, 'a, 'a, 'b, 'b, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(pack(given))
   }
 
-  // initial approach.
-  def __pack[A](l: List[A]): List[List[A]] = l match {
-    case Nil => Nil
-    case List(a) => List(List(a)) // base case
-    case List(a, b) => List(List(a), List(b))
+  def pack[A](l: List[A]): List[List[A]] = {
+    /**
+      * @param res outer list (initial status is Nil)
+      * @param xs  given list unpacked yet (elements of outer list)
+      * @return res
+      */
+    @tailrec
+    def rec(res: List[List[A]], xs: List[A]): List[List[A]] = xs match {
+      // exit case: return outer list if lookup is end
+      case Nil => res
+      // standard if case: sublist is not exist yet, so append one
+      case h :: tail if res.isEmpty || res.last.head != h => rec(res ::: List(List(h)), tail)
+      // standard else case: there is a sublist, so put it in
+      case h :: tail => rec(res.init ::: List(res.last ::: List(h)), tail)
+    }
+
+    rec(List(), l)
   }
 
-  /**
-    * 重複を許すパターン
-    *
-    * :: と ::: -> 新たなコレクションを生成して返すため非破壊的
-    *
-    * @param outer    bigger one (initial status is Nil)
-    * @param unpacked a target list unpacked yet (elements of outer)
-    * @tparam A any type
-    * @return outer
-    */
-  def pack[A](outer: List[List[A]], unpacked: List[A]): List[List[A]] = unpacked match {
-    /*
-     * exit case
-     *
-     * 着目が全て終わったら(h::tail の これ以上返せる tail がなかったら)結果を返す
-     */
-    case Nil => outer
-
-    /*
-     * standard if case
-     *
-     * outer がまだ empty の時を含め、
-     * h に対する pack がまだない -> 新しい pack を append する
-     */
-    case h :: tail
-      if outer.isEmpty || outer.last.head != h =>
-      pack(outer ::: List(List(h)), tail)
-
-    /*
-     * standard else case
-     *
-     * h に対する pack がすでに(末尾に)存在する -> 該当 pack に入れる
-     * (init: last を除いたこれまでの要素)
-     */
-    case h :: tail =>
-      pack(outer.init ::: List(outer.last ::: List(h)), tail)
-  }
 }
