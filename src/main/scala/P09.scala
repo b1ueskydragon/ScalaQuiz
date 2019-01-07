@@ -1,11 +1,24 @@
 import scala.annotation.tailrec
 
-/** Pack consecutive duplicates of list elements into sublists.
-  */
+// Pack consecutive duplicates of list elements into sublists.
 object P09 {
   def main(args: Array[String]): Unit = {
     lazy val given = List('a, 'a, 'a, 'b, 'b, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(pack_(given))
     println(pack(given))
+  }
+
+  def pack_[A](l: List[A]): List[List[A]] = {
+    @tailrec
+    def rec(xs: List[A], stack: List[A], acc: List[List[A]]): List[List[A]] =
+      (xs, stack, acc) match {
+        case (Nil, sub, res) => sub :: res
+        case (h :: tail, sub, res) =>
+          if (sub.isEmpty || h == sub.head) rec(tail, h :: sub, res)
+          else rec(tail, List(h), sub :: res)
+      }
+
+    rec(l, List(), List()).reverse
   }
 
   def pack[A](l: List[A]): List[List[A]] = {
