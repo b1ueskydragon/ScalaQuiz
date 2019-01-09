@@ -7,6 +7,7 @@ object P09 {
     println(pack_(given))
     println(pack(given))
     println(pack__(given))
+    println(pack___(given))
   }
 
   def pack_[A](l: List[A]): List[List[A]] = {
@@ -49,4 +50,16 @@ object P09 {
     rec(List(), l)
   }
 
+  def pack___[A](l: List[A]): List[List[A]] = {
+    @tailrec
+    def rec(res: List[List[A]], xs: List[A]): List[List[A]] = {
+      if (xs.isEmpty) res.reverse
+      else {
+        val s = xs.span(_ == xs.head)
+        rec(s._1 :: res, s._2)
+      }
+    }
+
+    rec(List(), l)
+  }
 }
