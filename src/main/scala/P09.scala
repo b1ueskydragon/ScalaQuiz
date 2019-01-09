@@ -8,6 +8,7 @@ object P09 {
     println(pack(given))
     println(pack__(given))
     println(pack___(given))
+    println(pack____(given))
   }
 
   def pack_[A](l: List[A]): List[List[A]] = {
@@ -61,5 +62,16 @@ object P09 {
     }
 
     rec(List(), l)
+  }
+
+  def pack____[A](l: List[A]): List[List[A]] = {
+    l.foldRight(List[List[A]]()) { (x, acc) =>
+      acc match {
+        case Nil => List(x) :: acc
+        case h :: tail =>
+          if (h.isEmpty || x == h.head) (x :: h) :: tail
+          else List(x) :: acc
+      }
+    }
   }
 }
