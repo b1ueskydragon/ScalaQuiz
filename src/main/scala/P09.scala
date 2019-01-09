@@ -64,14 +64,11 @@ object P09 {
     rec(List(), l)
   }
 
-  def pack____[A](l: List[A]): List[List[A]] = {
-    l.foldRight(List[List[A]]()) { (x, acc) =>
-      acc match {
-        case Nil => List(x) :: acc
-        case h :: tail =>
-          if (h.isEmpty || x == h.head) (x :: h) :: tail
-          else List(x) :: acc
-      }
+  def pack____[A](l: List[A]): List[List[A]] = l.foldRight(List[List[A]]()) { (x, acc) =>
+    acc match {
+      case h :: tail if h.isEmpty || x == h.head => (x :: h) :: tail
+      case _ => List(x) :: acc // includes case Nil
     }
   }
+
 }
