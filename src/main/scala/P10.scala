@@ -5,6 +5,7 @@ object P10 {
     val given = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
     println(encode(given))
     println(encode_(given))
+    println(encode__(given))
   }
 
   def encode[A](l: List[A]): List[(Int, A)] = {
@@ -25,4 +26,15 @@ object P10 {
     }
   }
 
+  def encode__[A](l: List[A]): List[(Int, A)] = {
+    @tailrec
+    def rec(res: List[(Int, A)], xs: List[A]): List[(Int, A)] = xs match {
+      case h :: _ =>
+        val s = xs.span(_ == h)
+        rec((s._1.length, h) :: res, s._2)
+      case _ => res
+    }
+
+    rec(List[(Int, A)](), l)
+  }
 }
