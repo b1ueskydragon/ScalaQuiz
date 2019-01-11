@@ -2,8 +2,9 @@ import scala.annotation.tailrec
 
 object P10 {
   def main(args: Array[String]): Unit = {
-    val duplicatedList = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    println(encode(duplicatedList))
+    val given = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(encode(given))
+    println(encode_(given))
   }
 
   def encode[A](l: List[A]): List[(Int, A)] = {
@@ -15,6 +16,13 @@ object P10 {
     }
 
     rec(List(), pack__(l))
+  }
+
+  def encode_[A](l: List[A]): List[(Int, A)] = l.foldRight(List[(Int, A)]()) { (x, acc) =>
+    acc match {
+      case h :: tail if x == h._2 => (h._1 + 1, x) :: tail
+      case _ => (1, x) :: acc
+    }
   }
 
 }
