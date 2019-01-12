@@ -1,12 +1,18 @@
 object P07 {
   def main(args: Array[String]): Unit = {
-    val target = List(List(1, 2), 3, List(4, List(5, 6)))
-    println(flatten(target))
+    val given = List(List(1, 2), 3, List(4, List(5, 6)))
+    println(flatten(given))
+    println(flatten_(given))
   }
 
-  def flatten[A](l: List[A]): List[A] = l match {
+  def flatten(l: List[Any]): List[Any] = l match {
     case Nil => Nil
-    case (h: List[A]) :: tail => flatten(h) ::: flatten(tail) // l の head が A 型の List なのか? (recursive case. どこかのタイミングで最小単位要素となる)
-    case (h: A) :: tail => h :: flatten(tail)                 // head が A 型の最小単位の要素なのか? (base case)
+    case (h: List[_]) :: tail => flatten(h) ::: flatten(tail)
+    case h :: tail => h :: flatten(tail)
+  }
+
+  def flatten_(l: List[Any]): List[Any] = l.flatMap {
+    case xs: List[_] => flatten_(xs)
+    case x => List(x)
   }
 }
