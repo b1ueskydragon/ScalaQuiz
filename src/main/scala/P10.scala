@@ -1,4 +1,5 @@
 import scala.annotation.tailrec
+import P09.pack__
 
 object P10 {
   def main(args: Array[String]): Unit = {
@@ -6,10 +7,10 @@ object P10 {
     println(encode(given))
     println(encode_(given))
     println(encode__(given))
+    println(encode___(given))
   }
 
   def encode[A](l: List[A]): List[(Int, A)] = {
-    import P09.pack__
     @tailrec
     def rec(res: List[(Int, A)], xs: List[List[A]]): List[(Int, A)] = xs match {
       case Nil => res
@@ -37,4 +38,7 @@ object P10 {
 
     rec(List[(Int, A)](), l)
   }
+
+  def encode___[A](l: List[A]): List[(Int, A)] = pack__(l).map(x => (x.length, x.head))
+
 }
