@@ -9,6 +9,8 @@ object P09 {
     println(pack__(given))
     println(pack___(given))
     println(pack____(given))
+    println(pack_____(given))
+    println(pack______(given))
   }
 
   def pack_[A](l: List[A]): List[List[A]] = {
@@ -69,6 +71,23 @@ object P09 {
       case h :: tail if h.isEmpty || x == h.head => (x :: h) :: tail
       case _ => List(x) :: acc // includes case Nil
     }
+  }
+
+  def pack_____[A](l: List[A]): List[List[A]] = {
+    val (acc, rest) = l.splitAt(l.indexWhere(_ != l.head))
+    if (acc.isEmpty) List(l)
+    else acc :: pack_____(rest)
+  }
+
+  def pack______[A](l: List[A]): List[List[A]] = {
+    @tailrec
+    def rec(res: List[List[A]], l: List[A]): List[List[A]] = {
+      val (acc, rest) = l.splitAt(l.indexWhere(_ != l.head))
+      if (acc.isEmpty) l :: res
+      else rec(acc :: res, rest)
+    }
+
+    rec(Nil, l).reverse
   }
 
 }
