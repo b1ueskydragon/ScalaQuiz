@@ -7,9 +7,10 @@ import scala.annotation.tailrec
   */
 object P11 {
   def main(args: Array[String]): Unit = {
-    val target = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    println(encodeModified(encode(target)))
-    println(encodeModified_(target))
+    val given = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(encodeModified(encode(given)))
+    println(encodeModified_(given))
+    println(encodeModified__(given))
   }
 
   def encodeModified[A](l: List[(Int, A)]): List[Any] = {
@@ -27,4 +28,16 @@ object P11 {
     case e if e._1 == 1 => e._2
     case e => e
   }
+
+  // for fun
+  def encodeModified__[A](l: List[A]): List[Any] =
+    l.foldRight(List[(Int, A)]()) { (x, acc) =>
+      acc match {
+        case h :: tail if x == h._2 => (h._1 + 1, x) :: tail
+        case _ => (1, x) :: acc
+      }
+    }.foldRight(List[Any]()) { (x, acc) =>
+      if (x._1 == 1) x._2 :: acc else x :: acc
+    }
+
 }
