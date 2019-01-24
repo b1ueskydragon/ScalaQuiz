@@ -1,54 +1,34 @@
+import scala.annotation.tailrec
+
+/** without using P09#pack. do it directly.
+  */
 object P13 {
   def main(args: Array[String]): Unit = {
-    val target = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    println(encodeDirect(target))
-    println()
-    println(encodeDirectUseSpan(List(), target))
+    val given = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(encodeDirect(given))
+    println(encodeDirect_(given))
   }
 
-  /**
-    * not using P09#pack ver.
-    *
-    * @param rawList original list
-    * @tparam A type
-    * @return packed list
-    */
-  def encodeDirect[A](rawList: List[A]): List[(Int, A)] = {
-    def _encodeDirect(result: List[(Int, A)], rawList: List[A]): List[(Int, A)] = rawList match {
-      case Nil =>
-        println("tail empty")
-        result
-
-      case h :: tail if result.nonEmpty && h == result.last._2 =>
-        println(h + " standard case 1")
-        _encodeDirect(result.init ::: List((result.last._1 + 1, h)), tail)
-
-      case h :: tail =>
-        println(h + " standard case 2")
-        _encodeDirect(result ::: List((1, h)), tail)
+  def encodeDirect[A](l: List[A]): List[(Int, A)] = {
+    @tailrec
+    def rec(acc: List[(Int, A)], xs: List[A]): List[(Int, A)] = xs match {
+      case Nil => acc.reverse
+      case h :: tail if acc.isEmpty || h != acc.head._2 => rec((1, h) :: acc, tail)
+      case h :: tail => rec((acc.head._1 + 1, h) :: acc.tail, tail)
     }
 
-    _encodeDirect(List(), rawList)
+    rec(List(), l)
   }
 
-  /**
-    * using span function ver.
-    *
-    * write case `rawList == Nil` at first
-    * (to prevent Exception caused by Nil.head).
-    *
-    * @param result  packed list
-    * @param rawList original list
-    * @tparam A type
-    * @return result
-    */
-  def encodeDirectUseSpan[A](result: List[(Int, A)], rawList: List[A]): List[(Int, A)] = {
-    rawList match {
-      case Nil => result
+  def encodeDirect_[A](l: List[A]): List[(Int, A)] = {
+    @tailrec
+    def rec(acc: List[(Int, A)], xs: List[A]): List[(Int, A)] = xs match {
+      case Nil => acc.reverse // to prevent Exception caused by Nil.head
       case _ =>
-        println(rawList.head + " now looking")
-        val (pack, unpack) = rawList span (_ == rawList.head)
-        encodeDirectUseSpan(result ::: List((pack.length, rawList.head)), unpack)
+        val (pack, unpack) = xs.span(_ == xs.head)
+        rec((pack.length, xs.head) :: acc, unpack)
     }
+
+    rec(List(), l)
   }
 }
