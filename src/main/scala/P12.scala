@@ -35,10 +35,10 @@ object P12 {
 
     @tailrec
     def rec(res: List[A], xs: List[(Int, A)]): List[A] = xs match {
-      case Nil => res.reverse
+      case Nil => res
       case h :: tail =>
-        if (h._1 > 1) rec(replicate(h._1, h._2) ::: res, tail)
-        else rec(h._2 :: res, tail)
+        if (h._1 > 1) rec(res ::: replicate(h._1, h._2), tail)
+        else rec(res ::: List(h._2), tail)
     }
 
     rec(List(), l)

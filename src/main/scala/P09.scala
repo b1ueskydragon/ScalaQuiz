@@ -1,6 +1,6 @@
 import scala.annotation.tailrec
 
-// Pack consecutive duplicates of list elements into sublists.
+/** Pack consecutive duplicates of list elements into sublists. */
 object P09 {
   def main(args: Array[String]): Unit = {
     lazy val given = List('a, 'a, 'a, 'b, 'b, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
@@ -17,13 +17,13 @@ object P09 {
     @tailrec
     def rec(xs: List[A], stack: List[A], acc: List[List[A]]): List[List[A]] =
       (xs, stack, acc) match {
-        case (Nil, sub, res) => sub :: res
+        case (Nil, sub, res) => res ::: List(sub)
         case (h :: tail, sub, res) =>
           if (sub.isEmpty || h == sub.head) rec(tail, h :: sub, res)
-          else rec(tail, List(h), sub :: res)
+          else rec(tail, List(h), res ::: List(sub))
       }
 
-    rec(l, List(), List()).reverse
+    rec(l, List(), List())
   }
 
   def pack[A](l: List[A]): List[List[A]] = {
@@ -56,10 +56,10 @@ object P09 {
   def pack___[A](l: List[A]): List[List[A]] = {
     @tailrec
     def rec(res: List[List[A]], xs: List[A]): List[List[A]] = {
-      if (xs.isEmpty) res.reverse
+      if (xs.isEmpty) res
       else {
         val s = xs.span(_ == xs.head)
-        rec(s._1 :: res, s._2)
+        rec(res ::: List(s._1), s._2)
       }
     }
 
@@ -83,11 +83,11 @@ object P09 {
     @tailrec
     def rec(res: List[List[A]], l: List[A]): List[List[A]] = {
       val (acc, rest) = l.splitAt(l.indexWhere(_ != l.head))
-      if (acc.isEmpty) l :: res
-      else rec(acc :: res, rest)
+      if (acc.isEmpty) res ::: List(l)
+      else rec(res ::: List(acc), rest)
     }
 
-    rec(Nil, l).reverse
+    rec(Nil, l)
   }
 
 }

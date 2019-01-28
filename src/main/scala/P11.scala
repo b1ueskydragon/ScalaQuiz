@@ -16,9 +16,9 @@ object P11 {
   def encodeModified[A](l: List[(Int, A)]): List[Any] = {
     @tailrec
     def rec(res: List[Any], pairs: List[(Int, A)]): List[Any] = pairs match {
-      case Nil => res.reverse
-      case h :: tail if h._1 == 1 => rec(h._2 :: res, tail)
-      case h :: tail => rec(h :: res, tail)
+      case Nil => res
+      case h :: tail if h._1 == 1 => rec(res ::: List(h._2), tail)
+      case h :: tail => rec(res ::: List(h), tail)
     }
 
     rec(List(), l)

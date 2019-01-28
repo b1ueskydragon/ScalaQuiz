@@ -12,9 +12,9 @@ object P13 {
   def encodeDirect[A](l: List[A]): List[(Int, A)] = {
     @tailrec
     def rec(acc: List[(Int, A)], xs: List[A]): List[(Int, A)] = xs match {
-      case Nil => acc.reverse
-      case h :: tail if acc.isEmpty || h != acc.head._2 => rec((1, h) :: acc, tail)
-      case h :: tail => rec((acc.head._1 + 1, h) :: acc.tail, tail)
+      case Nil => acc
+      case h :: tail if acc.isEmpty || h != acc.last._2 => rec(acc ::: List((1, h)), tail)
+      case h :: tail => rec(acc.init ::: List((acc.last._1 + 1, h)), tail)
     }
 
     rec(List(), l)
@@ -23,12 +23,14 @@ object P13 {
   def encodeDirect_[A](l: List[A]): List[(Int, A)] = {
     @tailrec
     def rec(acc: List[(Int, A)], xs: List[A]): List[(Int, A)] = xs match {
-      case Nil => acc.reverse // to prevent Exception caused by Nil.head
+      case Nil => acc // to prevent Exception caused by Nil.head
       case _ =>
         val (pack, unpack) = xs.span(_ == xs.head)
-        rec((pack.length, xs.head) :: acc, unpack)
+        rec(acc ::: List((pack.length, xs.head)), unpack)
     }
 
     rec(List(), l)
   }
+
+  // TODO!! foldright to avoid use ::: or reverse
 }

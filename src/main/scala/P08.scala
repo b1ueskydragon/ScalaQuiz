@@ -1,7 +1,6 @@
 import scala.annotation.tailrec
 
-/**
-  * Eliminate consecutive duplicates of list elements.
+/** Eliminate consecutive duplicates of list elements.
   * The order of the elements should not be changed.
   */
 object P08 {
@@ -19,11 +18,11 @@ object P08 {
     @tailrec
     def rec(l: List[A], stack: List[A]): List[A] = l match {
       case Nil => Nil
-      case List(x) => x :: stack
-      case h :: tail => if (h == tail.head) rec(tail, stack) else rec(tail, h :: stack)
+      case List(x) => stack ::: List(x)
+      case h :: tail => if (h == tail.head) rec(tail, stack) else rec(tail, stack ::: List(h))
     }
 
-    rec(l, List()).reverse
+    rec(l, List())
   }
 
   def compress__[A](l: List[A]): List[A] = l match {
@@ -36,8 +35,8 @@ object P08 {
   def compress___[A](l: List[A]): List[A] = {
     @tailrec
     def rec(acc: List[A], l: List[A]): List[A] = l match {
-      case Nil => acc.reverse
-      case h :: tail => rec(h :: acc, tail.dropWhile(h == _))
+      case Nil => acc
+      case h :: tail => rec(acc ::: List(h), tail.dropWhile(h == _))
     }
 
     rec(List(), l)
