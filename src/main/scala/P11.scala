@@ -1,4 +1,4 @@
-import P10._
+import P10.{encode_ => encode}
 
 import scala.annotation.tailrec
 
