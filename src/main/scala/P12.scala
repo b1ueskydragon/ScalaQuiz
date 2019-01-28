@@ -12,14 +12,15 @@ object P12 {
   def decode[A](l: List[(Int, A)]): List[A] = {
     @tailrec
     def rec(res: List[A], xs: List[(Int, A)]): List[A] = xs match {
-      case Nil => res.reverse
-      case h :: tail if h._1 > 1 => rec(h._2 :: res, (h._1 - 1, h._2) :: tail)
-      case h :: tail => rec(h._2 :: res, tail)
+      case Nil => res
+      case h :: tail if h._1 > 1 => rec(res ::: List(h._2), (h._1 - 1, h._2) :: tail)
+      case h :: tail => rec(res ::: List(h._2), tail)
     }
 
     rec(List(), l)
   }
 
+  // reverse is O(N)
   // refactor above but not simple
   def decode_[A](l: List[(Int, A)]): List[A] = {
     // TODO: with lazy eval with stream
