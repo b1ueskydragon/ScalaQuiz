@@ -1,18 +1,19 @@
+import scala.annotation.tailrec
+
 object P12 {
   def main(args: Array[String]): Unit = {
-    val target = List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))
-    println(decode(target))
+    val given = List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))
+    println(decode(given))
   }
 
-  def decode[A](encoded: List[(Int, A)]): List[A] = {
-    def _decode(result: List[A], encoded: List[(Int, A)]): List[A] = encoded match {
-      case Nil => result
-      case h :: tail
-        if h._1 > 1 =>
-        _decode(result ::: List(h._2), (h._1 - 1, h._2) :: tail)
-      case h :: tail => _decode(result ::: List(h._2), tail)
+  def decode[A](l: List[(Int, A)]): List[A] = {
+    @tailrec
+    def rec(res: List[A], xs: List[(Int, A)]): List[A] = xs match {
+      case Nil => res.reverse
+      case h :: tail if h._1 > 1 => rec(h._2 :: res, (h._1 - 1, h._2) :: tail)
+      case h :: tail => rec(h._2 :: res, tail)
     }
 
-    _decode(List(), encoded)
+    rec(List(), l)
   }
 }
