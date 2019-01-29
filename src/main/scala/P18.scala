@@ -1,55 +1,41 @@
+import scala.annotation.tailrec
+
 object P18 {
   def main(args: Array[String]): Unit = {
-    val target = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
-    println(sliceDrop(3, 7, target))
-    println(sliceFunction(3, 7, target))
-    println(sliceTake(3, 7, target))
-    println(sliceRecursion(3, 7, target))
-    println(sliceRecursionTail(3, 7, target))
-    println(sliceRecursionAnother(3, 7, target))
+    val xs = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
+    val (i, k) = (3, 7)
+    println(xs.slice(i, k)) // built-in
+    println(slice_(i, k, xs))
+    println(slice__(i, k, xs))
+    println(slice___(i, k, xs))
+    println(slice____(i, k, xs))
   }
 
-  def sliceDrop[A](from: Int, to: Int, l: List[A]): List[A] = l.drop(from).dropRight(to - from)
+  def slice_[A](from: Int, to: Int, l: List[A]): List[A] = l.take(to).drop(from)
 
-  def sliceFunction[A](i: Int, k: Int, l: List[A]): List[A] = l.slice(i, k)
+  def slice__[A](from: Int, to: Int, l: List[A]): List[A] = l.drop(from).dropRight(to - from)
 
-  def sliceTake[A](from: Int, to: Int, l: List[A]): List[A] = l.take(to).drop(from)
-
-  // start and end point is fixed.
-  def sliceRecursion[A](start: Int, end: Int, l: List[A]): List[A] = {
-    def _recursion(cursor: Int, current: List[A], rst: List[A]): List[A] = (cursor, current) match {
-      case (_, Nil) => rst // 何もしない
-      case (c, h :: tail) if end <= c => println(h + " : go out of range"); rst // 何もしない
-      case (c, h :: tail) if start <= c => println(h + " : enter in range"); _recursion(c + 1, tail, rst ::: List(h))
-      case (c, h :: tail) => println(h + " : heading to start point"); _recursion(c + 1, tail, rst)
+  def slice___[A](start: Int, end: Int, l: List[A]): List[A] = {
+    @tailrec
+    def rec(cursor: Int, current: List[A], rst: List[A]): List[A] = (cursor, current) match {
+      case (_, Nil) => rst
+      case (c, _) if end <= c => rst
+      case (c, h :: tail) if start <= c => rec(c + 1, tail, rst ::: List(h))
+      case (c, _ :: tail) => rec(c + 1, tail, rst)
     }
 
-    _recursion(0, l, Nil)
+    rec(0, l, Nil)
   }
 
-  // same as above but tail recursive.
-  def sliceRecursionTail[A](start: Int, end: Int, l: List[A]): List[A] = {
-    def _recursion(cursor: Int, current: List[A], rst: List[A]): List[A] = (cursor, current) match {
-      case (_, Nil) => rst.reverse
-      case (c, h :: tail) if end <= c => rst.reverse
-      case (c, h :: tail) if start <= c => _recursion(c + 1, tail, h :: rst)
-      case (c, h :: tail) => _recursion(c + 1, tail, rst)
+  def slice____[A](left: Int, right: Int, l: List[A]): List[A] = {
+    @tailrec
+    def rec(rst: List[A], left: Int, right: Int, l: List[A]): List[A] = l match {
+      case _ :: tail if left > 0 => rec(rst, left - 1, right - 1, tail)
+      case h :: tail if right > 0 => rec(rst ::: List(h), 0, right - 1, tail)
+      case _ => rst // left, right is zero
     }
 
-    _recursion(0, l, Nil)
+    rec(List(), left, right, l)
   }
 
-  def sliceRecursionAnother[A](left: Int, right: Int, l: List[A]): List[A] = {
-    def _recursion(rst: List[A], left: Int, right: Int, l: List[A]): List[A] = l match {
-      case h :: tail if left > 0 =>
-        println(h + " : left")
-        _recursion(rst, left - 1, right - 1, tail)
-      case h :: tail if right > 0 =>
-        println(h + " : right")
-        _recursion(rst ::: List(h), 0, right - 1, tail)
-      case _ => rst // 範囲を狭め続けた結果. left, right is zero
-    }
-
-    _recursion(List(), left, right, l)
-  }
 }
