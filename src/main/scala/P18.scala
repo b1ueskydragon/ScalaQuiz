@@ -13,6 +13,7 @@ object P18 {
     println(slice___(i, k, xs))
     println(slice____(i, k, xs))
     println(slice_____(i, k, xs))
+    println(slice______(i, k, xs))
   }
 
   def slice_[A](from: Int, to: Int, l: List[A]): List[A] = l.take(to).drop(from)
@@ -51,5 +52,8 @@ object P18 {
       if (al > t) acc.init else if (al > t - i) acc.tail else acc
     }
   }
+
+  def slice______[A](i: Int, k: Int, xs: List[A]): List[A] =
+    xs.zipWithIndex.foldRight(List[A]())((x, acc) => if (x._2 >= i && x._2 < k) x._1 :: acc else acc)
 
 }
