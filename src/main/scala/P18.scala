@@ -8,19 +8,15 @@ object P18 {
     //val (i, k) = (-2, 400)
 
     println(xs.slice(i, k)) // built-in
+    println(xs.take(k).drop(i)) // could replace to slice
+
+    println(slice(i, k, xs))
     println(slice_(i, k, xs))
-    //println(slice__(i, k, xs))
+    println(slice__(i, k, xs))
     println(slice___(i, k, xs))
-    println(slice____(i, k, xs))
-    println(slice_____(i, k, xs))
-    println(slice______(i, k, xs))
   }
 
-  def slice_[A](from: Int, to: Int, l: List[A]): List[A] = l.take(to).drop(from)
-
-  //def slice__[A](from: Int, to: Int, l: List[A]): List[A] = l.drop(from).dropRight(to - from)
-
-  def slice___[A](start: Int, end: Int, l: List[A]): List[A] = {
+  def slice[A](start: Int, end: Int, l: List[A]): List[A] = {
     @tailrec
     def rec(cursor: Int, current: List[A], rst: List[A]): List[A] = (cursor, current) match {
       case (_, Nil) => rst
@@ -32,7 +28,7 @@ object P18 {
     rec(0, l, Nil)
   }
 
-  def slice____[A](left: Int, right: Int, l: List[A]): List[A] = {
+  def slice_[A](left: Int, right: Int, l: List[A]): List[A] = {
     @tailrec
     def rec(rst: List[A], left: Int, right: Int, l: List[A]): List[A] = l match {
       case _ :: tail if left > 0 => rec(rst, left - 1, right - 1, tail)
@@ -44,7 +40,7 @@ object P18 {
   }
 
   // TODO length is O(N), try foldl
-  def slice_____[A](i: Int, k: Int, xs: List[A]): List[A] = {
+  def slice__[A](i: Int, k: Int, xs: List[A]): List[A] = {
     val xl = xs.length
     val t = if (k >= xl) xl else k
     xs.foldRight(xs) { (_, acc) =>
@@ -53,7 +49,7 @@ object P18 {
     }
   }
 
-  def slice______[A](i: Int, k: Int, xs: List[A]): List[A] =
+  def slice___[A](i: Int, k: Int, xs: List[A]): List[A] =
     xs.zipWithIndex.foldRight(List[A]())((x, acc) => if (x._2 >= i && x._2 < k) x._1 :: acc else acc)
 
 }
