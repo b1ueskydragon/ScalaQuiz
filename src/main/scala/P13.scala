@@ -4,10 +4,12 @@ import scala.annotation.tailrec
   */
 object P13 {
   def main(args: Array[String]): Unit = {
-    val given = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-    println(encodeDirect(given))
-    println(encodeDirect_(given))
-    println(encodeDirect__(given))
+    val xs = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(encodeDirect(xs))
+    println(encodeDirect_(xs))
+    println(encodeDirect__(xs))
+    println(encodeDirect___(xs))
+    println(encodeDirect____(xs))
   }
 
   def encodeDirect[A](l: List[A]): List[(Int, A)] = {
@@ -36,6 +38,24 @@ object P13 {
   // foldr to avoid use ::: or reverse
   def encodeDirect__[A](xs: List[A]): List[(Int, A)] = xs.foldRight(List[(Int, A)]()) {
     (x, acc) => if (acc.isEmpty || acc.head._2 != x) (1, x) :: acc else (acc.head._1 + 1, x) :: acc.tail
+  }
+
+  def encodeDirect___[A](xs: List[A]): List[(Int, A)] = {
+    val el = xs.takeWhile(_ == xs.head)
+    val size = el.length
+    if (el.isEmpty) Nil else (size, el.head) :: encodeDirect___(xs.drop(size))
+  }
+
+  // encodeDirect___ tailrec
+  def encodeDirect____[A](l: List[A]): List[(Int, A)] = {
+    @tailrec
+    def rec(acc: List[(Int, A)], xs: List[A]): List[(Int, A)] = {
+      val el = xs.takeWhile(_ == xs.head)
+      val size = el.length
+      if (el.isEmpty) acc else rec((size, el.head) :: acc, xs.drop(size))
+    }
+
+    rec(List(), l)
   }
 
 }
