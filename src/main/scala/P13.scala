@@ -7,6 +7,7 @@ object P13 {
     val given = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
     println(encodeDirect(given))
     println(encodeDirect_(given))
+    println(encodeDirect__(given))
   }
 
   def encodeDirect[A](l: List[A]): List[(Int, A)] = {
@@ -32,5 +33,9 @@ object P13 {
     rec(List(), l)
   }
 
-  // TODO!! foldright to avoid use ::: or reverse
+  // foldr to avoid use ::: or reverse
+  def encodeDirect__[A](xs: List[A]): List[(Int, A)] = xs.foldRight(List[(Int, A)]()) {
+    (x, acc) => if (acc.isEmpty || acc.head._2 != x) (1, x) :: acc else (acc.head._1 + 1, x) :: acc.tail
+  }
+
 }
