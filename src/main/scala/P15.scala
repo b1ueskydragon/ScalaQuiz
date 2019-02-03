@@ -1,22 +1,25 @@
+import scala.annotation.tailrec
+
 object P15 {
   def main(args: Array[String]): Unit = {
-    val target = List('a, 'b, 'c, 'c, 'd)
-    println(duplicateN(3, target))
-    println()
-    println(duplicateNUseFill(3, target))
+    val n = 3
+    val xs = List('a, 'b, 'c, 'c, 'd)
+    println(duplicateN(n, xs))
+    println(duplicateN_(n, xs))
   }
 
-  def duplicateN[A](n: Int, ori: List[A]): List[A] = {
-    val globalN = n
+  def duplicateN[A](n: Int, l: List[A]): List[A] = {
+    val k = n
 
-    def _duplicateN(n: Int, result: List[A], ori: List[A]): List[A] = ori match {
-      case Nil => result
-      case lst if n > 1 => _duplicateN(n - 1, result ::: List(lst.head), ori)
-      case h :: tail => _duplicateN(globalN, result ::: List(h), tail)
+    @tailrec
+    def rec(n: Int, acc: List[A], l: List[A]): List[A] = l match {
+      case Nil => acc
+      case xs if n > 1 => rec(n - 1, acc ::: List(xs.head), l)
+      case h :: tail => rec(k, acc ::: List(h), tail)
     }
 
-    _duplicateN(globalN, List(), ori)
+    rec(k, List(), l)
   }
 
-  def duplicateNUseFill[A](n: Int, ori: List[A]): List[A] = ori.flatMap(List.fill(n)(_))
+  def duplicateN_[A](n: Int, xs: List[A]): List[A] = xs.flatMap(List.fill(n)(_))
 }
