@@ -20,11 +20,8 @@ object P12 {
     rec(List(), l)
   }
 
-  // reverse is O(N)
-  // refactor above but not simple
+  // refactor but not simple
   def decode_[A](l: List[(Int, A)]): List[A] = {
-    // TODO: with lazy eval with stream
-    // TODO: replace to List.fill(r)(e)
     def replicate(r: Int, e: A): List[A] = {
       @tailrec
       def rec(res: List[A], r: Int, e: A): List[A] =
@@ -44,12 +41,12 @@ object P12 {
     rec(List(), l)
   }
 
-  // refactor above with foldr. simple but I don't like ::: concatenation
+  // refactor with foldr. simple but I don't like ::: concatenation
   def decode__[A](xs: List[(Int, A)]): List[A] = xs.foldRight(List[A]()) { (x, acc) =>
     if (x._1 > 1) List.fill(x._1)(x._2) ::: acc else x._2 :: acc
   }
 
-  // do more simply that above with flatten
+  // do more simply with flatMap
   def decode___[A](xs: List[(Int, A)]): List[A] = xs.flatMap(x => List.fill(x._1)(x._2))
 
 }
