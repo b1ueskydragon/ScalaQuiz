@@ -16,6 +16,9 @@ object P02 {
       println(penultimate__(xs))
       println(penultimate___(xs))
     }
+
+    println(penultimate____(Nil))
+    println(penultimate____(xs))
   }
 
   def penultimate[A](xs: List[A]): A = xs.init.last
@@ -36,6 +39,11 @@ object P02 {
   def penultimate___[A](l: List[A]): A = l match {
     case _ if l.length == 2 => l.head
     case xs => penultimate___(xs.tail)
+  }
+
+  def penultimate____[A](l: List[A]): Either[Exception, A] = {
+    if (l.length > 2) Right(l.init.last)
+    else Left(new Exception("length is less than 2"))
   }
 
 }
