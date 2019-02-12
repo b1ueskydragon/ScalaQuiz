@@ -6,6 +6,7 @@ object P15 {
     val xs = List('a, 'b, 'c, 'c, 'd)
     println(duplicateN(n, xs))
     println(duplicateN_(n, xs))
+    println(duplicateN__(n, xs))
   }
 
   def duplicateN[A](n: Int, l: List[A]): List[A] = {
@@ -22,4 +23,8 @@ object P15 {
   }
 
   def duplicateN_[A](n: Int, xs: List[A]): List[A] = xs.flatMap(List.fill(n)(_))
+
+  def duplicateN__[A](n: Int, xs: List[A]): List[A] =
+    xs.foldLeft(List[A]())((acc, x) => acc ++ (1 to n).map(_ => x))
+
 }
