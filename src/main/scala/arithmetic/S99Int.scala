@@ -5,10 +5,12 @@ package arithmetic {
     import S99Int._
 
     // Lazy infinite list of primes (Stream is lazy).
-    val primes: Stream[Int] = Stream.cons(hd = 2, tl = Stream.from(3, 2).filter(_.isPrime))
+    val primes: Stream[Int] =
+      Stream.cons(hd = 2, tl = Stream.from(3, 2).filter(_.isPrime))
 
     // Put a limit on `isPrime` to the square root.
-    def isPrime: Boolean = (num > 1) && (primes.takeWhile { ph => ph <= Math.sqrt(num) } forall { ph => num % ph != 0 })
+    def isPrime: Boolean = (num > 1) &&
+      primes.takeWhile(_ <= Math.sqrt(num)).forall(num % _ != 0)
   }
 
   object S99Int {
@@ -24,6 +26,7 @@ package arithmetic {
       // P32
       println(gcd(12, 40))
     }
+
   }
 
 }

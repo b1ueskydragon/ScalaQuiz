@@ -11,7 +11,7 @@ object P31 {
   def isPrime(num: Int): Boolean = num match {
     case _ if num == 2 => true
     case _ if num < 2 || num % 2 == 0 => false
-    case _ => ((3 to Math.sqrt(num).toInt) by 2) forall (num % _ != 0)
+    case _ => ((3 to Math.sqrt(num).toInt) by 2).forall(num % _ != 0)
   }
 
   def primes = Stream.cons(2, Stream.from(3, 2).filter(isPrime))
