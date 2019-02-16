@@ -6,12 +6,12 @@ object P17 {
     //val xs = Nil
     val n = 3
     //val n = 0
-
     println(xs.splitAt(n))
     println(split(n, xs))
     println(split_(n, xs))
     println(split__(n, xs))
     println(split___(n, xs))
+    println(split____(n, xs))
   }
 
   def split[A](n: Int, xs: List[A]): (List[A], List[A]) = xs.span(xs.indexOf(_) < n)
@@ -35,5 +35,11 @@ object P17 {
 
     (xs diff right, right)
   }
+
+  def split____[A](n: Int, xs: List[A]): (List[A], List[A]) =
+    xs.foldRight((xs.length, (List[A](), List[A]()))) { (x, acc) =>
+      if (acc._1 > n) (acc._1 - 1, (acc._2._1, x :: acc._2._2))
+      else (n, (x :: acc._2._1, acc._2._2))
+    }._2
 
 }
