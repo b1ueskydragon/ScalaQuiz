@@ -2,9 +2,10 @@ import scala.annotation.tailrec
 
 object P17 {
   def main(args: Array[String]): Unit = {
+    val xs = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
+    //val xs = Nil
     val n = 3
     //val n = 0
-    val xs = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
 
     println(xs.splitAt(n))
     println(split(n, xs))
@@ -17,14 +18,12 @@ object P17 {
 
   def split_[A](n: Int, xs: List[A]): (List[A], List[A]) = {
     @tailrec
-    def rec(n: Int, left: List[A], right: List[A], l: List[A]): (List[A], List[A]) = l match {
-      case Nil => (left, right)
-      case h :: tail =>
-        if (left.length < n) rec(n, left ::: List(h), right, tail)
-        else rec(n, left, right ::: List(h), tail)
+    def rec(n: Int, xs: List[A], left: List[A], right: List[A]): (List[A], List[A]) = xs match {
+      case _ if n <= 0 || xs.isEmpty => (left.reverse, xs)
+      case h :: tail => rec(n - 1, tail, h :: left, right)
     }
 
-    rec(n, List(), List(), xs)
+    rec(n, xs, List(), List())
   }
 
   // simply one
