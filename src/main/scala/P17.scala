@@ -12,6 +12,7 @@ object P17 {
     println(split__(n, xs))
     println(split___(n, xs))
     println(split____(n, xs))
+    println(split_____(n, xs))
   }
 
   def split[A](n: Int, xs: List[A]): (List[A], List[A]) = xs.span(xs.indexOf(_) < n)
@@ -36,10 +37,20 @@ object P17 {
     (xs diff right, right)
   }
 
+  // get length takes O(N)
   def split____[A](n: Int, xs: List[A]): (List[A], List[A]) =
     xs.foldRight((xs.length, (List[A](), List[A]()))) { (x, acc) =>
       if (acc._1 > n) (acc._1 - 1, (acc._2._1, x :: acc._2._2))
       else (n, (x :: acc._2._1, acc._2._2))
+    }._2
+
+  // without get length but list concat with foldLeft is slow
+  def split_____[A](n: Int, xs: List[A]): (List[A], List[A]) =
+    xs.foldLeft(0, (List[A](), List[A]())) { (acc, x) =>
+      acc match {
+        case (i, (_, r)) if i < n => (i + 1, (acc._2._1 ::: List(x), r))
+        case (i, (l, _)) => (i + 1, (l, acc._2._2 ::: List(x)))
+      }
     }._2
 
 }
