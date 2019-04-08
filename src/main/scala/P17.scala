@@ -13,6 +13,8 @@ object P17 {
     println(split___(n, xs))
     println(split____(n, xs))
     println(split_____(n, xs))
+    println(split______(n, xs))
+
   }
 
   def split[A](n: Int, xs: List[A]): (List[A], List[A]) = xs.span(xs.indexOf(_) < n)
@@ -52,5 +54,13 @@ object P17 {
         case (i, (l, _)) => (i + 1, (l, acc._2._2 ::: List(x)))
       }
     }._2
+
+  // recursion, without use get length, neither :::
+  def split______[A](n: Int, xs: List[A]): (List[A], List[A]) = xs match {
+    case _ if n <= 0 => (Nil, xs) // base case
+    case h :: tail => // standard
+      val (left, right) = split______(n - 1, tail)
+      (h :: left, right) // output (append h to left, no-op right)
+  }
 
 }
