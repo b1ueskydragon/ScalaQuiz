@@ -6,8 +6,7 @@ class P26Spec extends FunSpec {
   describe("combinations") {
 
     it("should generate sequence of sub-sequences that each length is n") {
-      val n = 3
-      val xs = List('a, 'b, 'c, 'd, 'e, 'f)
+      val (k, xs) = (3, List('a, 'b, 'c, 'd, 'e, 'f))
 
       val expected =
         List(List('a, 'b, 'c), List('a, 'b, 'd), List('a, 'b, 'e), List('a, 'b, 'f), List('a, 'c, 'd), List('a, 'c, 'e), List('a, 'c, 'f), List('a, 'd, 'e), List('a, 'd, 'f), List('a, 'e, 'f),
@@ -15,7 +14,7 @@ class P26Spec extends FunSpec {
           List('c, 'd, 'e), List('c, 'd, 'f), List('c, 'e, 'f),
           List('d, 'e, 'f))
 
-      assert(combinations(n, xs) === expected)
+      assert(combinations(k, xs) === expected)
     }
 
   }
