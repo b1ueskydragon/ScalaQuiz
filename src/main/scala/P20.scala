@@ -1,26 +1,29 @@
 object P20 {
   def main(args: Array[String]): Unit = {
-    val target = List('a, 'b, 'c, 'd)
-    println(removeAt(3, target)) // (List('a, 'c, 'd),'b)
-    println(removeAtAnother(3, target))
+    val xs = List('a, 'b, 'c, 'd)
+    val n = 3
+    require(xs.nonEmpty)
+    println(removeAt(n, xs))
+    println(removeAt_(n, xs))
   }
 
-  def removeAt[A](n: Int, l: List[A]): (List[A], A) = {
-    def _recursion(sub: List[A], cnt: Int, l: List[A]): List[A] = l match {
-      case Nil => sub
-      case _ if cnt == 0 => _recursion(sub, cnt - 1, l.tail)
-      case _ => _recursion(sub :+ l.head, cnt - 1, l.tail)
+  def removeAt[A](n: Int, xs: List[A]): (List[A], A) = {
+    @scala.annotation.tailrec
+    def rec(res: List[A], cnt: Int, curr: List[A]): List[A] = curr match {
+      case Nil => res.reverse
+      case _ if cnt == 0 => rec(res, cnt - 1, curr.tail)
+      case h :: tail => rec(h :: res, cnt - 1, tail)
     }
 
-    (_recursion(Nil, n, l), l(n))
+    (rec(Nil, n, xs), xs(n))
   }
 
-  def removeAtAnother[A](n: Int, l: List[A]): (List[A], A) = {
-    (n, l) match {
-      case (0, h :: tail) => (tail, h) // exit case
-      case (_, h :: tail) =>
-        val (t, re) = removeAtAnother(n - 1, tail)
-        (h :: t, re)
-    }
+  def removeAt_[A](n: Int, xs: List[A]): (List[A], A) = (n, xs) match {
+    case (0, h :: tail) => (tail, h) // exit case
+    case (_, h :: tail) =>
+      val (t, re) = removeAt_(n - 1, tail)
+      (h :: t, re)
+    case (_, Nil) => throw new IllegalArgumentException
   }
+
 }
