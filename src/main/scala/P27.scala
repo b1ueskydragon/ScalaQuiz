@@ -1,4 +1,4 @@
-import P26.combinations
+import P26.combinationsMutable
 
 object P27 {
   def main(args: Array[String]): Unit = {
@@ -12,16 +12,16 @@ object P27 {
   // determine first (_,_) (_,_,_) then can get (_,_,_,_) automatically
   def group3[A](origin: List[A]): List[List[List[A]]] = {
     for {
-      _2 <- combinations(2, origin)
+      _2 <- combinationsMutable(2, origin)
       tail = origin diff _2
-      _3 <- combinations(3, tail)
+      _3 <- combinationsMutable(3, tail)
     } yield List(_2, _3, tail diff _3)
   }
 
   def groupN[A](pattern: List[Int], origin: List[A]): List[List[List[A]]] = pattern match {
     case Nil => List(List())
     case h :: tail =>
-      combinations(h, origin) flatMap {
+      combinationsMutable(h, origin) flatMap {
         c =>
           groupN(tail, origin diff c) map {
             c :: _
