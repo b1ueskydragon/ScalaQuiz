@@ -40,12 +40,18 @@ object P26 {
       * @param f  mapping. convert all elements of T to S
       * @return list of type S
       */
-    def flatMapLike[T, S](ts: List[T])(f: List[T] => List[S]): List[S] =
-      if (ts.isEmpty) List.empty[S]
+    def flatMapLike[T, S](ts: List[T])(f: List[T] => List[S]): List[S] = {
+      if (ts.isEmpty) Nil
       else f(ts) ::: flatMapLike(ts.tail)(f)
+    }
 
     if (k == 0) List(Nil)
-    else ???
+    else flatMapLike(ns) { xs =>
+      // Backtracking.
+      // cs is an each elements of successful result (previous combinations)
+      // so next step is just concat a head to previous results.
+      combinations(xs.tail, k - 1).map(cs => xs.head :: cs)
+    }
   }
 
 }
