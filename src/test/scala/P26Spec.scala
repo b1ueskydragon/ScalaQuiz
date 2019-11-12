@@ -6,8 +6,8 @@ class P26Spec extends FunSpec {
   describe("combinations") {
 
     it("should generate sequence of sub-sequences that each length is k") {
-      val (k, xs) = (3, List('a, 'b, 'c, 'd, 'e, 'f))
-      assert(combinationsMutable(k, xs) === xs.combinations(k).toList)
+      val (ns, k) = (List('a, 'b, 'c, 'd, 'e, 'f), 3)
+      assert(combinationsMutable(ns, k) === ns.combinations(k).toList)
     }
 
   }
